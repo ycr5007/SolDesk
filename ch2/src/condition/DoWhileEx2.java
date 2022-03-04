@@ -3,7 +3,7 @@ package condition;
 import java.util.Scanner;
 
 /*
-	q 가 입력되기 전까지 문자를 입력받기 
+	q 가 입력되기 전까지 문자를 입력받기  
 */
 
 public class DoWhileEx2 {

@@ -12,7 +12,7 @@ import java.util.Scanner;
 */
 
 /*
-	1 ~ 100 사이의 임의의 숫자 맞추기 
+	1 ~ 100 사이의 임의의 숫자 맞추기  
 */
 
 public class DoWhileEx1 {

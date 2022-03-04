@@ -1,7 +1,7 @@
 package condition;
 
 /*
-	while
+	while 
 	
 	반복문의 기본 구조
 		- 초기화 ( int i = 0; )

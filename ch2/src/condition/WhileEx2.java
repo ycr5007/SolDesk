@@ -1,6 +1,6 @@
 package condition;
 
-/*
+/* 
 	1 ~ 10 까지 합 구하기
 */
 

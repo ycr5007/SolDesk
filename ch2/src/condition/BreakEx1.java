@@ -1,7 +1,7 @@
 package condition;
 
 /*
-	break : 반복문을 강제적으로 탈출 
+	break : 반복문을 강제적으로 탈출  
 */
 
 public class BreakEx1 {
