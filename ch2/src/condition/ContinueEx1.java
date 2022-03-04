@@ -1,7 +1,7 @@
 package condition;
 
 /*
-	continue : continue 가 실행되면 이후 반복문은 실행하지 않고, 반복문 처음으로 돌아간다.
+	continue : continue 가 실행되면 이후 반복문은 실행하지 않고, 반복문 처음으로 돌아간다. 
 */
 
 public class ContinueEx1 {

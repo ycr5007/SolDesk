@@ -3,7 +3,7 @@ package condition;
 import java.util.Scanner;
 
 /*
-	
+	간단한 은행 계좌 관리 시스템
 */
 
 public class BankApp {

@@ -3,7 +3,7 @@ package condition;
 /*
 	break / continue
 		break > break 실행 후, 반복문 완전 탈출
-		continue > continue 실행 후, 해당 반복 내용 생략
+		continue > continue 실행 후, 해당 반복 내용 생략 
 */
 
 /*

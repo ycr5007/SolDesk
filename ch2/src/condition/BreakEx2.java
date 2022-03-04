@@ -3,7 +3,7 @@ package condition;
 /*
 	while(조건식1){
 		while(조건식2){
-			break; > 중첩되어있는 경우 break 문이 위치한 반복문을 탈출한다. (조건식2)
+			break; > 중첩되어있는 경우 break 문이 위치한 반복문을 탈출한다. (조건식2) 
 		}
 	}
 */

@@ -2,7 +2,7 @@ package condition;
 
 /*
 	1 ~ 100 까지 숫자 중에서 소수 구하기
-	1 과 자기 자신으로만 나누어지는 수
+	1 과 자기 자신으로만 나누어지는 수 
 */
 
 public class PrimeNumber {

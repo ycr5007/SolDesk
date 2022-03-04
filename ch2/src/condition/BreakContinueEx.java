@@ -3,7 +3,7 @@ package condition;
 import java.util.Scanner;
 
 /*
-	continue 와 break 는 한 반복문 내에서 같이 사용이 가능하다. (조건으로 구분)
+	continue 와 break 는 한 반복문 내에서 같이 사용이 가능하다. ( 조건으로 구분 )
 */
 
 public class BreakContinueEx {
