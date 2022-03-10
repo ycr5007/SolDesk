@@ -15,5 +15,5 @@ public class AccountEx1 {
 		account.withdrawBalance(Integer.parseInt(sc.nextLine()));
 		
 		sc.close();
-	}
+	} 
 }

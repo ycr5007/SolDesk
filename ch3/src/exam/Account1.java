@@ -26,7 +26,7 @@ public class Account1 {
 			this.balance = balance;
 			System.out.println("정상적으로 반영되었습니다. 현재 잔고는 " + this.balance + " 입니다.");
 		}
-	}
+	} 
 	
 	public void depositBalance(int balance) {
 		if((this.balance + balance) >= MAX_BALANCE) {
