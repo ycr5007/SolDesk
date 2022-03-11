@@ -53,5 +53,14 @@ public class AccountEx {
 		System.out.println(creditCard2.getOwner() + "님의 현재 잔액은 " + creditCard2.getBalance() + " 입니다.");
 		creditCard2.withdraw(1100000);
 		System.out.println(creditCard2.getOwner() + "님의 현재 잔액은 " + creditCard2.getBalance() + " 입니다.");
+
+		BonusPointAccount bonusAccount1 = new BonusPointAccount("110-112-446604", "나문희", 50000);
+		
+		System.out.println("=================================bonusAccount1=================================");
+		
+		System.out.println(bonusAccount1.getOwner() + "님의 현재 잔액은 " + bonusAccount1.getBalance() + " 입니다.");
+		bonusAccount1.deposit(50000);
+		System.out.println("bonusAccount1 의 bonusPoint : " + bonusAccount1.getBonusPoint());
+		System.out.println(bonusAccount1.getOwner() + "님의 현재 잔액은 " + bonusAccount1.getBalance() + " 입니다.");
 	}
 }
