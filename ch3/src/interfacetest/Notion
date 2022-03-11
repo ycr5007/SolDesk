@@ -1,0 +1,84 @@
+	
+	
+	interface	:	가장 기초가 되는 설계도 ( 추상메소드와 상수로만 구성된다. )
+				:	추상클래스보다 추상화 정도가 더 높음 (일반메소드, 변수 작성 불가)
+				:	다른 클래스를 작성하는데 도움 줄 목적으로 작성
+			
+	────────────────────────────────────────────────변수────────────────────────────────────────────────
+		private int num;
+			> Illegal modifier for the interface field Adder.num; only public, static & final are permitted
+			> 일반 변수 선언 불가
+		public static final int SPADE = 1;
+			> 가능 ( static final, 상수형태 선언 )
+		int DIAMOND = 3;
+			> 가능 ( 자동으로 상수화하기 때문에 가능, public static final int DIAMOND = 3; 으로 처리 )
+		final int HEART = 2;
+			> 가능 ( 상수 )
+		static int CLOVER = 4;
+			> 가능 ( final 을 자동으로 생성 및 처리하여 상수로 처리 )
+			
+	────────────────────────────────────────────────메소드────────────────────────────────────────────────
+		public void print() {	}
+			> Abstract methods do not specify a body
+			> 일반 메소드 작성 불가 ( 단, default, static 키워드가 붙은 메소드는 허용(java8.x 버전 이후) )
+		public void print1();
+			> 가능 (추상메소드)
+			> 오버라이딩 必
+		int add(int x, int y);
+			> 가능
+			> public 를 생략하더라도 자동으로 생성하여 처리
+			> 매개변수 사용 가능
+			> 오버라이딩 必
+		public default void print2() {	}															┐ ==> 인터페이스 자체를 수정할 경우가 종종 있기 때문에
+			> 가능 ( default 키워드가 붙어있으므로 가능 ) 단, 상속받은 클래스에서 반드시 사용해야하는 의무는 없음				│		인터페이스를 수정할 수 있도록
+			> 블록문 내부에 코드 작성이 가능하며, 인터페이스의 수정을 가능하게 하기위해 JAVA 8.x 버전 이후로 추가된 기능이다.		│		default, static 메소드는
+		public static void print3() {	}															│		블록문으로 코드작성이 가능하다.
+			> 가능 ( static 키워드가 붙어있으므로 가능 ) 단, 상속받은 클래스에서 반드시 사용해야하는 의무는 없음				│
+			> static 예약어가 있기 때문에, 클래스 공통으로 작성된 코드 (오버라이딩 불가)								│
+			> 블록문 내부에 코드 작성이 가능하며, 인터페이스의 수정을 가능하게 하기위해 JAVA 8.x 버전 이후로 추가된 기능이다.		┘
+	──────────────────────────────────────────────────────────────────────────────────────────────────────
+	인터페이스 상속
+	
+		public class ClassName implements Interface1, Interface2 ... {	}
+			> 인터페이스 상속은 개수의 제한이 없다.
+		public class ClassName extends SuperClass implements Interface {  }
+			> 인터페이스의 상속과 슈퍼클래스의 상속은 동시에 가능하다. ( 단, 슈퍼클래스는 여전히 한개만 상속 )
+	
+	──────────────────────────────────────────────────────────────────────────────────────────────────────
+	
+		§ 인터페이스도 다형성 개념을 적용할 수 있다.
+			> SeparateVolume book = new SeparateVolume("101D", "개미", "베르나르 베르베르");
+				> Lendable book1 = new SeparateVolume("110D", "신", "베르나르 베르베르");
+			> AppCD cd = new AppCD("999A", "Oracle");
+				> Lendable cd1 = new AppCD("999A", "MySQL");
+	
+	──────────────────────────────────────────────────────────────────────────────────────────────────────
+	익명 구현 객체 예시
+		> interface 객체를 생성 ( 추상메소드를 불러와 오버라이딩 )
+		> 1회성 객체 ( 클래스(src)를 만들지 않고, 객체를 직접 구현하여 사용 )
+		
+			메소드 내부에서 RemoteControl 인터페이스를 객체화 하여 생성
+		
+			RemoteControl rc1 = new RemoteControl() {
+				int volume;
+				@Override
+				public void turnOn() {
+					System.out.println("축음기를 켭니다");
+				}
+				@Override
+				public void turnOff() {
+					System.out.println("축음기를 끕니다.");
+				}
+				@Override
+				public void setVolume(int volume) {
+					if(volume > RemoteControl.MAX_VOLUME) {
+						this.volume = RemoteControl.MAX_VOLUME;
+					}else if(volume < RemoteControl.MIN_VOLUME) {
+						this.volume = RemoteControl.MIN_VOLUME;
+					}else {
+						this.volume = volume;
+					}
+					System.out.println("현재 축음기 볼륨 : " + this.volume);
+				}
+			};
+			
