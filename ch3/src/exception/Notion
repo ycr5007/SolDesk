@@ -1,7 +1,9 @@
 
 Exception ( 예외처리 )
 	
-	
+	Exception은 해석하면 '예외'라는 뜻을 가지고 있습니다. 예외는 error의 일종이며 프로그램이 수행시 또는 컴파일시에 불능상태를 만들어 버립니다.
+	Exception이 발생하는 이유는 여러가지 입니다.
+	잘못된 프로그램 조작 및 개발자 실수 등 여러가지 요인으로 인해 Exception이 발생합니다.
 		
 	CheckedException : 에러가 확인되어, Exception 처리를 해야 실행가능
 		> RuntimeException을 상속하지 않는 클래스는 Checked Exception 이다
