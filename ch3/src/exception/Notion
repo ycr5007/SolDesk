@@ -1,0 +1,90 @@
+
+Exception ( 예외처리 )
+	
+	
+		
+	CheckedException : 에러가 확인되어, Exception 처리를 해야 실행가능
+		> RuntimeException을 상속하지 않는 클래스는 Checked Exception 이다
+			FileNotFoundException
+			
+	
+	UnCheckedException : 에러가 확인되지 않지만, 실행 시 에러 발생 
+		> RuntimeException을 상속하는 클래스는 UnChecked Exception 이다
+		> Error : LinkageError, ThreadDeath, AssertionError, VirtualMachineError
+			java.lang.ArrayIndexOutOfBoundsException : 배열의 범위를 벗어남
+			java.lang.ArithmeticException : 수학적 처리 상 문제 발생 ( 0 으로 나눔 ... )
+			java.lang.NullPointerException : 객체 배열을 생성했지만, 객체를 생성하지 않고 객체 내부의 메소드 또는 변수에 접근하려고 할때 에러 발생 ( 객체 생성 X )
+			java.lang.NumberFormatException : 자료형 변경과정에서 변경 불가능한 값을 받았을 때 ( "100a"를 문자열로 변경 불가 )
+			
+			
+	예외처리방법		
+		try-catch-finally
+			예외 발생 예상 코드를 입력 받아, 예외 발생 시 해당 예외에 대한 처리 코드로 이동
+			
+				try {
+					예외 발생 예상 코드
+							:		> 뒤 코드는 생략 후 예외발생 처리코드로 이동한다.
+				} catch (ExceptionType | ExceptionType name1) {
+					예외 발생 시 처리 코드
+							:
+				} catch (ExceptionType name2 {
+					예외 발생 시 처리 코드
+							:
+				} finally {
+					예외가 발생하더라도 반드시 실행되는 코드 (주로, 리소스 해제 코드 입력)
+							:
+				}
+				
+		try-with-resources Statement(try 리소스 문)
+			* 자원(이하 리소스)
+			- 프로그램이 끝날 때, 닫혀야 하는(close) 객체
+			- InputStream처럼 쓰고 나서 close() 메서드 호출하는 것들을 생각하면 편하다.
+			- 예 : InputStream, File 등등
+		
+				try(resource1; resource2){
+				
+				} catch(){
+				
+				}
+		
+		throws : 호출하는 메소드에게 예외를 떠넘김
+		
+			public void exceptionMethod() throws Exception {
+				Class.forName("java.lang.String2"); 
+			}
+			
+			public void receiveMethod() {
+				exceptionMethod(); > 호출하는 메소드에서 예외를 던졌기 때문에, 에러 발생 
+			}
+			
+			
+			
+	사용자 정의 예외 : Exception 클래스를 상속( Exception 클래스는 final 클래스 X )받아 재정의 가능
+		
+		public UserDefinedException extends Exception {
+			UserDefinedException(Constructor)() {
+				This is default Constructor
+			}
+			
+			UserDefinedException(Constructor)(String message) {
+				super(message);
+			}
+		}
+		
+		public static void ExampleMethod() throws UserDefinedException {
+			if(condition){
+				> throw : 강제 예외발생
+				throw new UserDefinedException("Exception Message");
+			}
+		}
+		
+		public static void main(String args[]) {
+			try{
+				Exception
+			} catch (UserDefinedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		─────────────────────────────────────────────────────────────────────
+		result >> exception.UserDefinedException: Exception Message
