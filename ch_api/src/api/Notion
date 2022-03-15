@@ -1,0 +1,47 @@
+┌─────────────────────────────────────────────────────────────────────
+│	API(Application Programming Interface) ≒ 라이브러리
+│
+│		프로그램 개발에 자주 사용되는 클래스 및 인터페이스 모음
+│		
+│	JAVA API > https://docs.oracle.com/en/java/javase/11/docs/api/index.html
+│		
+│		java.lang ( 자동으로 import 실행 ) ( String ... )
+│		java.util - import 문을 입력해줘야 한다. ( Scanner ... )
+│		
+│	Object Class
+│		모든 클래스는 Object 클래스를 상속하고 있으며, 따로 표시하지 않는다.
+│		
+│		ObjectEx1.java / Value.java / Member.java / MemberEx.java
+│		
+│	문자열 Class
+│		String : 문자열에 대한 가장 기본적인 Class 
+│		StringBuilder : 불변의 String 을 개선해, 변경 가능한 문자열
+│		StringTokenizer : 구분자로 문자열 분리
+│
+│	Math Class : 수학식 및 수학 관련 Class
+│
+│	날짜(시간) Class
+│		Date : Tue Mar 15 16:34:38 KST 2022
+│			> SimpleDateFormat , y(연도), M(월), d(일), h(시), 	m(분), s(초)
+│				> ex) "yyyy년 MM월 dd일 hh:mm:ss" => 2022년 03월 15일 06:05:35
+│		LocalDate : 2022-03-15
+│		LocalTime : 18:05:36.051971600
+│		LocalDateTime : 2022-03-15T18:05:36.051971600
+│		Calendar : 싱글톤패턴 (Calendar day = Calendar.getInstance();)
+│					> day.get(Calendar.YEAR) : 올해 연도 : 2022
+│					> day.get(Calendar.MONTH) : 월(0 ~ 11월) : 2
+│					> day.get(Calendar.WEEK_OF_MONTH) : 이 달의 몇째 주 : 3
+│					> day.get(Calendar.HOUR) : 현재 시간 : 6
+│
+│
+│	Wrapper Class : 기본형 타입을 객체로 다루기 위한 클래스
+│		Wrapper Class 선언 방법 : 생성자를 통한 객체 생성은 9 버전 이후로 불가
+│			WrapperClass name = WrapperClass.valueOf(Type);
+│				ex) Integer i = Integer.valueOf(100);
+│
+│	Arrays Class
+│		배열 관련 Class
+│		ArraysSort.java / ArraysEqual.java / ArraysBinarySearch.java
+
+
+
