@@ -1,4 +1,4 @@
-package api;
+package collection;
 
 import java.util.ArrayList;
 import java.util.Iterator;
