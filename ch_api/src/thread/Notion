@@ -1,0 +1,16 @@
+Thread ( extends Thread / implements Runnable )
+
+	Multi-Thread 
+		> CPU 사용률 향상
+		> 효율적인 자원 사용
+		> 작업 분리되어, 코드가 간결해짐
+		> 대부분의 App 은 Multi-Thread 기능을 통해 구현되어 있음
+		
+		extends Thread
+			> ClassName name = new ClassName();
+			
+		implements Runnable
+			> Runnable name1 = new ClassName();
+			> Thread name2 = new Thread(name1);
+			
+		
