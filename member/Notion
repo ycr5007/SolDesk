@@ -1,0 +1,27 @@
+Package Name Identify
+
+	Controller : 특정 메뉴가 선택이 되었을 때, 요청을 직접 받아 흐름을 제어하는 클래스 정의 ( 흐름 제어 )
+	Action : 화면제시 ( View ) , 입력값 가져오기 ( Scanner )
+	Service : Action 의 값을 매개변수로 받아 DB 작업 호출 ( 비즈니스 로직 처리 )
+	DAO : CRUD ( INSERT / UPDATE / DELETE / SELECT ... ) 담당
+	DTO : 테이블의 각 COLUMN 을 담고있는 객체
+	UI : 사용자가 보는 메뉴
+	Util : 사용자에게 입력갑을 받거나 / 사용자에게 결과값을 출력해주는 패키지
+	
+	MVC 2 Pattern 동작 순서
+	
+		MENU (UI)		: 사용자가 작업을 선택
+			↓
+		~ Controller	: 요청을 받아 선택된 Menu를 Action 클래스에 넘겨주며 동작에 대한 흐름 제어
+			↓
+		~ Action 		: DB 조회에 필요한 입력값을 사용자로부터 받아 내용 전달 ( ConsoleUtil 사용, 사용자에게 메세지 전달 )
+			↓
+		~ Service		: ~ Action 으로부터 받은 사용자 입력값을 통해 DB 작업 호출 ( JdbcUtil : Connection / ~ DAO : SQL 전달 )
+			↓
+		Database		: DAO 클래스를 통해 사용자의 입력값을 활용하여 SQL 문 작성 및 DB 통신
+			↓
+		~ Service		: 결과값을 반환 받아 출력을 위해 ~ Action 클래스로 전달 ( 정상 반영 (Commit) / 반영 실패 (Rollback) )
+			↓
+		~ Action		: Service 로부터 받은 결과값을 사용자에게 보여줌 ( ConsoleUtil 사용, 사용자에게 메세지 전달 )
+			↓
+		MENU (UI)		
