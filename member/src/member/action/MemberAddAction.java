@@ -17,9 +17,9 @@ public class MemberAddAction implements Action {
 		
 		// 서비스의 처리 결과를 화면(Console)에 제시
 		if(service.insertMember(insertDto)) {
-			util.printAddSuccessMessage();
+			util.printSuccessMessage();
 		}else {
-			util.printAddFailMessage();
+			util.printFailMessage();
 		}
 	}
 }

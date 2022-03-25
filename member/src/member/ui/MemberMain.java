@@ -30,6 +30,15 @@ public class MemberMain {
 				case 1 :
 					action = new MemberAddAction();
 					break;
+				case 2 :
+					action = new MemberListAction();
+					break;
+				case 3 :
+					action = new MemberModifyAction();
+					break;
+				case 4 :
+					action = new MemberRemoveAction();
+					break;
 				case 0 :
 					System.out.println("프로그램을 종료합니다...");
 					isStop = !isStop;
