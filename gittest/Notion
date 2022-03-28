@@ -83,3 +83,13 @@ vim filename.* : 파일 열기
 git 파일 관리방법 
 	프로젝트별로 관리
 	폴더 전체 관리
+	
+로컬 저장소 ( 우선 )
+원격 저장소 ( 필수 X ) => 팀 작업시에는 필수 !! ( (MS)github / gitlab )
+	원격저장소 생성 : Repasitory 생성
+		↓
+	로컬저장소 연결 : git remote add origin https://github.com/ycr5007/SolDesk.git
+				§ remote 는 원격 저장소를 의미
+		↓
+	로컬 저장소에 있는 내용 PUSH : git push -u origin master ( 강제 push : git push -f origin master )
+	
