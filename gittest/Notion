@@ -1,0 +1,85 @@
+Git / Git Bash
+
+	작업내용 저장 / 버전관리 : Git
+	버전관리가 필요한 이유
+	- 하나의 파일을 작성 후 해당 파일의 수정한 내용을 기록으로 남기고 싶다면 ?
+	- 하나의 파일을 수정하는 사람이 여러 사람이라면 ?
+
+	버전관리를 사용하는 시점
+	- 개발 협업을 위해 사용
+	- 개별적으로 버전 등 이력을 관리하기 위해 사용
+	- 버전 관리되는 내역 전체를 오픈 소스로 공유
+
+	버전관리 도구들
+	- git / bazaar / svn / mercurial
+
+	git 특징
+	- 기존 리눅스 커늘의 버전 컨트롤을 하는 BItkeeper 를 대체하기 위해서 나온 새로운 버전 컨트롤
+	- 속도에 중점을 둔 분산형 버전관리 시스템(DVCS)
+	- 대형 프로젝트에서 효과적임
+	- (★) Commit 은 로컬 저장소에서 이루어짐
+	- (★) push 라는 동작으로 원격 저장소에 반영
+	- (★) 네트워크에 접근하거나 중앙서버에 의존하지 않음
+	- GNU 일반 공중 사용 허가서 v2 하에 배포되는 자유 소프트웨어
+
+	- 시간순으로 프로젝트의 스냅샷 저장
+	- 파일이 달라지지 않으면 파일을 저장하지 않음
+
+	git 의 구성 
+	Working Directory ( 작업 공간 )
+	Staging Area ( Commit ) -> 로컬저장소로 이동
+	.git directory ( Repository ), Commited 상태
+
+Modified ( Untracked files ) >> Staged ( Changes to be commited ) >> Committed ( 추적 완료 )
+
+git Bash 명령어
+
+	사용자 등록
+	git config( 환경설정 ) ( 확인 ? git config --list )
+		git config --global user.name "yangchanryeol"
+		git config --global user.email "ycr5007@gmail.com"
+
+	폴더 이동 - cd [Directory name]
+
+	Working Directory 지정
+		git init ( git 초기화 작업 ) => local 저장소로 지정
+			master - Main Root
+			branch - Sub
+	
+	현재 깃 상태 확인
+		git status
+			Untracked files ( 로컬저장소에 저장되어 있으며, push 되지 않은 상태)
+			Changes to be committed ( Add 후, 추적 대상으로 지정 )
+			Changes not staged for commit ( 관리중인 파일이 변경이 되었을 때 : Modified )
+		git commit -m "Commit 메세지" ( 추적 완료 )
+수정 전용		git commit -a -m "Commit 메세지" ( Add(-a) 와 Commit 을 동시에 처리 )
+		git commit
+			i ( INSERT 모드 ) > "메세지 입력" > :wq (Write Quick)
+		git rm filename.* (rm : Remove) : 로컬 저장소에 있던 추적상태의 파일을 제거 ( Commit 필요 )
+		git rm --cache filename.* : 로컬 저장소에 있던 추적상태의 파일을 추적 해제
+	로그 확인 - git log [--graph]
+
+
+.gitignore 파일 작성 : 현재 폴더에 관리안할 파일 목록 기록
+	윈도우 생성 안될 때 : touch .gitignore
+	윈도우 생성 : txt 파일로 파일이름 없이 (.gitignore)
+	
+
+branch 
+	git branch 브랜치명 ( branch 생성 )
+	git checkout 브랜치명 ( branch 이동 )
+		§ checkout 	( Master branch 에서 다른 branch로 이동하면서, 현재까지 작업환경을 그대로 복제, 단 제일 처음 실행했을 때만 )
+				( 두번째부터는 이동의 개념으로만 활용 )
+	
+	merge : 두 개의 branch를 병합
+		git merge 브랜치명
+	conflict : 두 개의 branch 를 병합하면서 충돌 발생
+		Error 문 : Automatic merge failed; fix conflicts and then commit the result
+		충돌이 생긴 부분을 선택하여, 내용을 수정하고 Commit 실행
+vim filename.* : 파일 열기
+
+
+
+git 파일 관리방법 
+	프로젝트별로 관리
+	폴더 전체 관리
