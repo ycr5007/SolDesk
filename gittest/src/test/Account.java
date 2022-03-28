@@ -6,4 +6,9 @@ import lombok.Data;
 public class Account {
 	private String ano;
 	private int balance;
+	private String owner;
+	
+	public void deposit() {
+		System.out.println("deposit");
+	}
 }
