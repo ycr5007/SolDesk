@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /*
+        cascading style sheet
+            코드문은 위에서 아래로 적용되며, 중복된 코드가 있는경우 기존에 적용된 스타일은 제거하고, 가장 최근 스타일로 반영한다.
+    */
+      /* 클래스를 적용하기 위한 선택자 ( .클래스명 )을 통해 스타일 적용이 가능하다 */
+      .color {
+        color: blue;
+      }
+      .line {
+        color: orange;
+        text-decoration: underline;
+      }
+      .weight {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+        3 . 클래스 선택자 : 지정한 클래스 명을 가지고 있는 태그를 지정
+    -->
+    <div>
+      <h1>CSS 기본 문법</h1>
+      <h2>클래스 선택자</h2>
+    </div>
+    <ul>
+      <!--
+        아이템 : 글자색 파란색
+        두번째 아이템 : 밑줄
+        세번째 아이템 : 밑줄, 굵게
+      -->
+      <!-- 다중 클래스 지정, class="클래스명1 클래스명2 클래스명3 ..."-->
+      <li class="color">List Item 1</li>
+      <li class="color line">List Item 2</li>
+      <li class="color line weight">List Item 3</li>
+    </ul>
+  </body>
+</html>
