@@ -93,3 +93,21 @@ git 파일 관리방법
 		↓
 	로컬 저장소에 있는 내용 PUSH : git push -u origin master ( 강제 push : git push -f origin master )
 	
+	원격저장소 사용 순서
+	① Source 수정
+		↓
+	② Commit
+		↓
+	③ Pull
+		↓
+	④ Push
+	
+Reset
+	1) soft (only head) : 현재 선택한 Commit 이후의 모든 Commit 메세지를 제거, 소스는 남겨둠(Index)
+	2) mixed (only head and index) : 현재 선택한 Commit 이후의 모든 Commit 메세지를 제거, 소스는 남겨두지만 Unstaged 영역으로 넘김
+	3) hard (head and index and working tree) : 현재 선택한 Commit 이후의 모든 Commit 메세지 및 Source도 제거
+	
+	
+Team
+	1) 팀장 > Project 공유(초대)
+	
