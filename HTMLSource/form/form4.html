@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="" method="get">
+      <!--
+            fieldset : 입력 양식의 구분을 위해 테두리로 구분을 한다 .
+                legend : fieldset의 title 값 지정 태그
+        -->
+      <fieldset>
+        <legend>인 적 사 항</legend>
+        <div>
+          <!--
+                placeholder : 사용자에게 input 태그에 대한 안내 문구
+            -->
+          <label for="username">username</label><br />
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="이름을 입력하세요"
+          />
+        </div>
+        <div>
+          <label for="password">password</label><br />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="비밀번호를 입력하세요"
+          />
+        </div>
+      </fieldset>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .area p {
+        color: red;
+      }
+      p {
+        color: blue;
+      }
+      #text {
+        color: green !important;
+      }
+    </style>
+    <!-- <link rel="stylesheet" href="mystyle.css" /> -->
+  </head>
+  <body>
+    <!--
+        Style 우선순위
+        1. 명시도 점수가 높은 선언 : !important(1000점) > inline(500점) > id(100점) > class(10점) > tag(1점) > 전체 > 상속
+        2. 점수가 같은 경우 가장 마지막에 해석되는 선언이 우선
+        3. 명시도는 상속 규칙보다 우선
+        4. !important가 적용된 선언 방식은 다른 모든 방식보다 우선
+
+        .list li.item{ color: red; } >> 10점 + 1점 + 10점
+        .list li:hover{} >> 10점 + 1점 + 10점
+        .box::before{} >> 10점 + 1점
+        #submit span{} >> 100점 + 1점
+        :not(.box){} >> not은 점수 없음 10점
+        :not(h1){} >> 1점
+    -->
+    <div class="area">
+      <p id="text" style="color: orange">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio sequi
+        odit eveniet, fugiat nemo sit alias repellat consectetur facere
+        voluptatem excepturi quisquam numquam amet? Eligendi nesciunt beatae sit
+        voluptatum enim!
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      input:disabled {
+        background-color: #ddd;
+        border: 1px solid #ccc;
+      }
+      input:checked + span {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>CSS 기본 문법</h1>
+      <h2>가상클래스 선택자</h2>
+      <form action="" method="get">
+        <fieldset>
+          <legend>사용자 정보</legend>
+          <label for="name">이름</label>
+          <input type="text" disabled value="홍길동" />
+        </fieldset>
+        <fieldset>
+          <legend>신청과목</legend>
+          <label>
+            <input type="radio" name="subject" id="" value="회화" /><span
+              >회화</span
+            >
+          </label>
+          <label>
+            <input type="radio" name="subject" id="" value="문법" /><span
+              >문법</span
+            >
+          </label>
+          <label>
+            <input type="radio" name="subject" id="" value="작문" /><span
+              >작문</span
+            >
+          </label>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>

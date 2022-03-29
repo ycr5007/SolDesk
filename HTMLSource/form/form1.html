@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+        form : 웹서버에 정보를 제출하기 위한 양식의 범위를 정의
+            action : 전송할 정보를 처리할 웹페이지의 URL
+            method : 서버로 전송할 http 방식 (GET, POST)
+                GET(Default) : http://192.168.0.7:5500/2day/form/form1.html?name=%ED%99%8D%EA%B8%B8%EB%8F%99&age=15
+                    > 사용자가 입력한 값을 서버로 보낼 때 해당 정보를 URL에 표시
+                POST : 서버 프로그램이 없어 에러 발생 / http://192.168.0.7:5500/2day/form/form1.html?
+                    > 사용자가 작성한 값을 URL 에서 숨김
+            name : 이름
+    -->
+    <form action="" method="post" name="myform">
+      <!-- 전송할 정보 -->
+      <div>
+        <!--
+          label : input 태그에 대한 제목 또는 설명
+            for : input 태그의 id 와 연결되어 label을 클릭했을 때 input 태그로 이동
+        -->
+        <label for="name">이름</label>
+        <!--
+          input : 사용자가 값을 입력할 수 있는 공간
+            type : 입력받을 자료의 형식(text, password, ...)
+            name : 이름(필수) , 서버와 연동시 서버에서 데이터를 불러오는 변수의 역할을 함
+            id : label 태그의 (for = id) 의 경우 label을 클릭할 경우 해당 input 태그로 이동
+              > 일반적으로 (name) 과 (id)의 값은 같은 값으로 지정한다. 
+        -->
+        <input type="text" name="name" id="name" />
+      </div>
+      <div>이름 : <input type="text" name="" id="" /></div>
+      <div>
+        <label for="age" for="age">나이</label>
+        <input type="text" name="age" id="age" />
+      </div>
+      <input type="submit" value="보내기" />
+    </form>
+  </body>
+</html>
