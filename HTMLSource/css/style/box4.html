@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .parent {
+        width: 500px;
+        background-color: orange;
+        padding: 10px;
+        border: 10px solid red;
+
+        box-sizing: border-box;
+        /*
+          box-sizing
+            DEFAULT   content-box : margins + border + padding + Contents (Contents 크기 값 + padding, border 이기 때문에 크기가 변함)
+                      border-box : border + padding + Contents (Contents 크기 값에 맞춰 padding, border가 변경되어도 고정된 크기를 제공)
+        */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 
+        BOX 모델 : 박스 형태의 컨텐츠  
+        │    margin : 바깥쪽 여백 / 요소와 요소 사이의 여백(단, Margin이 중복되었을 때 병합처리)
+                    > ex) 형제 요소들의 margin-bottom ↔ margin-top 사이에 Margin 병합이 이루어짐 (단, 수평나열 (float: left)을 할 경우 병합 X)
+        │        border : 테두리
+        │            padding : 안쪽 여백
+        │                Contents : 요소
+
+        BOX 모델, 요소의 크기 > margins + border + padding + Contents
+    -->
+    <div class="parent">
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officiis omnis,
+      beatae minus dolore voluptate mollitia aspernatur, animi laudantium,
+      corrupti placeat expedita numquam? Nihil nobis voluptates ullam, omnis
+      modi iusto, possimus optio ad ipsa, aut ipsam et cum laudantium dolore
+      sunt ea! Ipsum voluptatum fugit animi quis vero odit exercitationem sunt
+      consequuntur. Excepturi ipsa dicta quia impedit saepe modi quasi magni
+      culpa mollitia nam nisi, fugiat consequatur doloribus iste molestias,
+      molestiae reprehenderit nesciunt dolor minima! Ex, accusamus maxime
+      doloribus cumque reiciendis asperiores facere sunt modi culpa nihil iste
+      rerum, hic nam totam, perspiciatis est sapiente eum. Quae nihil aperiam
+      excepturi debitis?
+    </div>
+  </body>
+</html>

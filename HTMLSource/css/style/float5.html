@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      img {
+        /* 이미지 하단의 여백 제거 */
+        vertical-align: top;
+      }
+      .content {
+        background-color: skyblue;
+      }
+      .content div {
+        border: 2px solid black;
+        margin-right: 10px;
+        float: left;
+      }
+      .clearfix::after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>float</h2>
+    <div class="content clearfix">
+      <div class="picture">
+        <img src="https://via.placeholder.com/100" alt="" />
+      </div>
+      <div class="picture">
+        <img src="https://via.placeholder.com/100" alt="" />
+      </div>
+      <div class="picture">
+        <img src="https://via.placeholder.com/100" alt="" />
+      </div>
+      <div class="picture">
+        <img src="https://via.placeholder.com/100" alt="" />
+      </div>
+    </div>
+    <h2>float 속성 해지</h2>
+  </body>
+</html>

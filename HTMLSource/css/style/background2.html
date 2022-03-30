@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .bg {
+        /* 태그의 크기보다 이미지가 작은 경우 */
+
+        width: 300px;
+        height: 300px;
+        border: 1px solid #000;
+        background-image: url(img/bg.png); /* Tag의 사이즈만큼 반복 삽입 (Img 사이즈 100x100) */
+        background-repeat: no-repeat;
+        /* 
+          DEFAULT > repeat : 반복
+                    no-repeat : 반복 X
+                    repeat-x : 가로만 반복
+                    repeat-y : 세로만 반복
+        */
+        background-position: left top; /* 가로(left / center / right) 세로(top / center / bottom) */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg"></div>
+  </body>
+</html>

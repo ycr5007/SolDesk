@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: tomato;
+        color: white;
+        font-size: 30px;
+        margin: 10px;
+
+        float: left;
+      }
+
+      /* float 해제 작업 */
+      .clearfix::after {
+        content: "";
+        display: block;
+        clear: both; /* float 해제 */
+      }
+
+      .box1 {
+        width: 200px;
+        height: 200px;
+        background-color: aquamarine;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+        float : 왼쪽이나 오른쪽으로 배치를 할 수 있다
+            배치된 요소들이 떠 있는 상태 (위에서 덮은 상태)
+      -->
+    <div class="clearfix">
+      <div class="box">1</div>
+      <div class="box">2</div>
+      <div class="box">3</div>
+    </div>
+    <div class="box1">4</div>
+  </body>
+  `
+</html>

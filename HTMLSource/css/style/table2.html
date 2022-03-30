@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      table {
+        /* 이웃하는 셀의 경계선을 합쳐, 단일선으로 표시 */
+        /* DEFAULT 값 : separate */
+        border-collapse: collapse;
+        /* width: 800px; */
+      }
+      th {
+        /* Table Header > DEFAULT (bold, text(center), vertical(center)) */
+        /* height: 50px; */
+        text-align: left;
+        vertical-align: bottom;
+      }
+      td,
+      th {
+        /* padding: 15px; 안쪽 여백 */
+        /* padding-left: 15px;
+        padding-bottom: 10px; */
+        padding: 20px 15px; /* 시계방향 적용 > top right (bottom left); */
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th>FirstName</th>
+        <th>LastName</th>
+      </tr>
+      <tr>
+        <td>Peter</td>
+        <td>Griffin</td>
+      </tr>
+      <tr>
+        <td>Lois</td>
+        <td>Griffin</td>
+      </tr>
+    </table>
+  </body>
+</html>

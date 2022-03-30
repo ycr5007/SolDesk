@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /*
+            display 속성
+                inline, block 등 태그의 형태 변경
+        */
+
+      div {
+        /*
+            block 요소의 특징
+                width > auto : 100%
+                height > auto : 0 에서 시작, 내용이 들어올 경우 내용의 끝
+                weight / height 를 수정하면, 해당 범위를 차지하며 반영 됨
+        */
+        width: 100px;
+        height: 50px;
+        background-color: violet;
+        display: inline;
+      }
+      span {
+        /*
+            inline 요소의 특징
+                width > auto : 컨텐츠의 너비
+                height > auto : 컨텐츠의 높이
+                width / height 값을 가질 수 없음 (반영 X)
+        */
+        width: 100px;
+        height: 50px;
+        background-color: orange;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div>content</div>
+    <span>content</span>
+  </body>
+</html>

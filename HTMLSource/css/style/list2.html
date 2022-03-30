@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* list-style-type > DEFAULT : 1 ~ N (없애고 싶은 경우 : none) */
+      /* list-style-position > DEFAULT : outside */
+      .a {
+        list-style-type: upper-alpha; /* A ~ Z */
+        list-style-position: inside; /* 들여쓰기, 리스트 단계 표현 */
+        /* list-style: lower-alpha, inside; < 축약형 */
+      }
+      .b {
+        list-style-type: lower-alpha; /* a ~ z */
+        list-style-position: outside;
+      }
+      .c {
+        list-style-type: upper-roman; /* I ~ X */
+      }
+    </style>
+  </head>
+  <body>
+    <ol class="a">
+      <li>HTML5</li>
+      <li>CSS3</li>
+      <li>JAVASCRIPT</li>
+    </ol>
+    <ol class="b">
+      <li>HTML5</li>
+      <li>CSS3</li>
+      <li>JAVASCRIPT</li>
+    </ol>
+    <ol class="c">
+      <li>HTML5</li>
+      <li>CSS3</li>
+      <li>JAVASCRIPT</li>
+    </ol>
+  </body>
+</html>
