@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+        - 변수 (타입을 최초에 지정하지 않음)
+                var / let
+                    ex ) var a = 4; / var b = 'a'; / let c = 5; / let d = 'b'
+                        var( Javascript ↓ 버전 변수 선언 )
+                            > (동일한 Scope 내 재선언 가능)
+                            
+                  let( Javascript ↑ 버전 변수 선언 )
+                    > (동일한 Scope 내 재선언 불가능 - Java와 같은 방식)
+        - 상수 선언
+                const
+    -->
+    <script>
+      let a = 3;
+      let b = 4;
+      console.log(a + b);
+
+      // let a = 5;
+      // Uncaught SyntaxError: Identifier 'a' has already been declared
+
+      var c = 5;
+      var d = 6;
+      console.log(c + d);
+
+      // var c = 7;
+      // 에러 X
+    </script>
+  </body>
+</html>
