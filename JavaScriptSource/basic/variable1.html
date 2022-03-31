@@ -13,11 +13,34 @@
                     ex ) var a = 4; / var b = 'a'; / let c = 5; / let d = 'b'
                         var( Javascript ↓ 버전 변수 선언 )
                             > (동일한 Scope 내 재선언 가능)
-                            
-                  let( Javascript ↑ 버전 변수 선언 )
-                    > (동일한 Scope 내 재선언 불가능 - Java와 같은 방식)
+                        let( Javascript ↑ 버전 변수 선언 )
+                            > (동일한 Scope 내 재선언 불가능 - Java와 같은 방식)
         - 상수 선언
                 const
+                    ex ) const PI = 3.14;
+
+        - 변수의 Type 확인 : typeof(var)
+            - String : 문자열 / 문자
+                > ' ' / " "  홑따옴표 , 쌍따옴표 두개 모두 String 타입으로 선언 가능하다 (단, 인라인방식의 경우 ' ' 만 사용가능하다.)
+            - number : 정수 / 실수
+            - boolean : 논리형
+            - undefined : 아직 정의되지 않은 변수
+            - object : 객체의 개념 (null 도 object로 표현된다.)
+
+        - 산술연산자 ( + - * / % ) > 단, ( / ) 는 소수점까지 나온다.
+
+        - 비교연산자 ( < = > ) : 값만 비교 (== !=) / 값과 타입까지 비교 (=== !==)
+            > ( = ) '3' == 3 >> true    ( 순수 값만 비교 )
+                    '3' === 3 >> false  ( 값과 타입을 비교 )
+                    '3' != 4 >> true
+                    '3' !== 3 >> true
+
+        - 연결기호 ( + )
+            String + String : 연결
+            String + number : 연결
+            'number' + number : 연결
+            number * 'number' : 연산자 ( - * / % ) ,(+ 를 제외한 다른 연산자는 문자열과 함꼐 있을 때 연산기호로 사용된다.)
+            String * number : NaN   
     -->
     <script>
       let a = 3;
