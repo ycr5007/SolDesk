@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        height: 100vh;
+      }
+      .grand-parent {
+        width: 800px;
+        height: 500px;
+        border: 2px dashed #777;
+      }
+      .parent {
+        width: 500px;
+        height: 400px;
+        border: 2px dashed #444;
+      }
+      .child {
+        width: 100px;
+        height: 100px;
+        background-color: tomato;
+        font-size: 30px;
+        border: 1px solid #000;
+        line-height: 100px;
+        text-align: center;
+      }
+      .fixed {
+        /* 지정된 위치에 고정시켜 화면 스크롤 및 창크기 변경에 영향을 받지 않고 항상 해당 위치를 차지한다. */
+        position: fixed;
+        right: 100px;
+        bottom: 100px;
+        /* 사용처 ) 배너광고, 안내표지 ... */
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+        position : 배치 방법
+            1 . static(DEFAULT) : 요소를 문서의 흐름에 맞게 배치하는 방식 
+            2 . relative : 문서 흐름 따라 위치 지정
+                          > 위치지정값 필요 (요소가 처음 배치된 자리(static)가 기준)
+            3 . absolute : 지정한 위치(부모의 요소를 기준 <- relative)에 배치(부모태그가 없을 경우, Browser 를 부모로 잡는다) (고정 X)
+            4 . fixed : 지정한 위치에 고정해 배치(화면에서 요소가 잘릴 수 있음)
+
+    -->
+    <div class="grand-parent">
+      <div class="parent">
+        <div class="child">1</div>
+        <div class="child fixed">2</div>
+        <div class="child">3</div>
+      </div>
+    </div>
+  </body>
+</html>
