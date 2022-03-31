@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 반응형 웹 페이지 제작 */
+      body {
+        /* 1024px ~ 의 상태 */
+        background: url(images/bg0.jpg) no-repeat fixed;
+        background-size: cover;
+      }
+
+      @media screen and (max-width: 1024px) {
+        /*  769px ~ 1024px 까지의 상태 */
+        body {
+          background: url(images/bg1.jpg) no-repeat fixed;
+          background-size: cover;
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        /* 320px ~ 768px 까지의 상태*/
+        body {
+          background: url(images/bg2.jpg) no-repeat fixed;
+          background-size: cover;
+        }
+      }
+
+      @media screen and (max-width: 320px) {
+        /* ~ 320px 까지의 상태 */
+        body {
+          background: url(images/bg3.jpg) no-repeat fixed;
+          background-size: cover;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 
+        MediaQuery : 사이트에 접속하는 장치에 따라 특정한 CSS 스타일을 사용하도록 해줌
+        @media [only|not] 미디어유형 [and 조건]{ }
+        -->
+  </body>
+</html>
