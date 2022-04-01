@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      test(1, 2);
+
+      function test(a, b, c, d) {
+        // 매개변수에 값이 할당되지 않았을 때 초기값 설정 ( || )
+        c = c || 52;
+        d = d || 233;
+        document.write(
+          "a: " + a + "&nbspb: " + b + "&nbspc: " + c + "&nbspd: " + d
+        );
+      }
+    </script>
+  </body>
+</html>

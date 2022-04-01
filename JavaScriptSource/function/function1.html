@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // function ( 함수 )
+      function myFunction(p1, p2) {
+        // 작업 코드
+        console.log(p1);
+        console.log(p2);
+      }
+
+      // 함수 호출
+      myFunction(1, 2);
+      myFunction("a", 10);
+
+      /* 
+      호이스팅 :JavaScript에서 호이스팅(hoisting)이란, 
+        인터프리터가 변수와 함수의 메모리 공간을 선언 전에 미리 할당하는 것을 의미합니다. 
+        var 로 선언한 변수의 경우 호이스팅 시 undefined 로 변수를 초기화합니다.
+            >> function 보다 실행문이 위에있어도 정상적으로 작동이 가능하다.
+            >> hoisting 기능은 ON | OFF 가능하다.
+      */
+      let result = mul(4, 3);
+
+      function mul(m1, m2) {
+        return m1 * m2;
+      }
+
+      document.write(result);
+    </script>
+  </body>
+</html>
