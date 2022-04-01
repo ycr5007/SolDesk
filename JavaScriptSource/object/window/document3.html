@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1 class="header1">Header1</h1>
+    <h1 class="header1">Header2</h1>
+    <h1 class="header1">Header3</h1>
+    <h1 class="header1">Header4</h1>
+
+    <!-- 같은 class 이름이 다수 있을 때 호출 상황 -->
+    <script>
+        // h1 요소 가져오기
+        let h1 = document.getElementsByClassName("header1");
+        console.log(h1);
+        console.log(h1[0]);
+        console.log(h1[1]);
+
+        for(var i = 0; i < h1.length; i++){
+            console.log(h1.item(i));
+        }
+    </script>
+</html>

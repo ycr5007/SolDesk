@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 이번 주 로또번호 생성
+      // 로또 번호를 6개 추출하여 배열에 담고 추출
+
+      const magicNum = new Array();
+      let flag;
+      for (let i = 0; i < 6; i++) {
+        flag = true;
+        let num = Math.floor(Math.random() * 45) + 1;
+        for (let j of magicNum) {
+          if (num == magicNum[j]) {
+            flag = false;
+          }
+        }
+        if (flag == true) {
+          magicNum.push(num);
+        }
+      }
+      document.write(magicNum);
+
+      //   let lottoArr = new Array();
+      //   while (true) {
+      //     let num = Math.floor(Math.random() * 45) + 1;
+      //     lottoArr.push(num);
+      //     if (lottoArr.length > 5) {
+      //       break;
+      //     }
+      //   }
+      //   document.write(lottoArr);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h1>Simple HTML</h1>
+    </div>
+    <div id="content">
+      <p>This is a <i>simple</i> HTML file</p>
+    </div>
+    <div class="callout">
+      <p>this is as fancy aswe'll get!</p>
+    </div>
+    <p>
+      IDs (such as <span class="code">#content</span>) are unique (there can
+      only be one per page).
+    </p>
+    <p>
+      Classes (such as <span class="code">.callout</span>) can be used on many
+      elements
+    </p>
+    <div id="callout2" class="callout fancy">
+      <p>A single HTML element can have multiple classes.</p>
+    </div>
+
+    <script>
+      // p 태그 두개 생성 ( 1 content 첫번째 자식태그 / 2 content 마지막 자식태그)
+      let content = document.getElementById("content");
+      const p1 = document.createElement("p");
+      p1.innerHTML = "I was create dynamically";
+      content.insertBefore(p1, content.firstElementChild); // insertBefore(insert_element, location) : location 앞에 요소를 위치시킨다.
+
+      const p2 = document.createElement("p");
+      p2.innerHTML = "i was also create dynamically";
+      content.appendChild(p2); // appendChild() / append() : 태그 내 가장 마지막 태그로 위치한다.
+    </script>
+  </body>
+</html>
