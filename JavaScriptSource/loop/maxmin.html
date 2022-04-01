@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let numArr = [52, 273, 586, 32, 57, 103, 312, 2];
+      let max = numArr[0];
+      let min = numArr[0];
+      for (var i = 0; i < numArr.length; i++) {
+        if (max < numArr[i]) {
+          max = numArr[i];
+        }
+        if (min > numArr[i]) {
+          min = numArr[i];
+        }
+      }
+      document.write(max + "&nbsp" + min);
+    </script>
+  </body>
+</html>
