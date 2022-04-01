@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = new Array();
+      arr.push(12);
+      arr.push(6);
+      arr.push(14);
+      arr.push(3);
+      arr.push(9);
+      arr.push(17);
+
+      // 연결기호 변경 join(sep) DEFAULT ( , )
+
+      document.write(arr + "<br>");
+      document.write(arr.join("-") + "<br>");
+
+      // 다른 배열과 연결
+      document.write(arr.concat([2, 4, 6, 8, 10]) + "<br>");
+
+      // 배열 자르기 slice(strNum, endNum)
+      document.write(arr.slice(1, 4) + "<br>");
+
+      // 배열 정렬 sort ( 기능 X, 배열을 문자열의 개념으로 받아들이기 때문에, 문자열로 정렬을 실행)
+      document.write(arr.sort() + "<br>");
+      document.write(["사당", "강남", "한남", "옥수"].sort() + "<br>");
+
+      // reverse ( => 배열의 인덱스값 뒤집기 ) > 내림차순 정렬방법
+      document.write(["사당", "강남", "한남", "옥수"].reverse() + "<br>");
+      const arr1 = ["Banana", "Orange", "Apple", "Mango"];
+      arr1.sort();
+      document.write(arr1 + "<br>");
+      document.write(arr1.reverse() + "<br>");
+      document.write(
+        ["사당", "강남", "한남", "옥수"].sort().reverse() + "<br>"
+      );
+    </script>
+  </body>
+</html>
