@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <label>이름</label>
+      <!-- onchange : 입력값을 변경한 후 focus 해제 또는 Enter 입력 시 동작 -->
+      <input type="text" name="name" id="name" onchange="lower()" />
+    </div>
+    <div>
+      <label>나이</label>
+      <!-- onblur : 입력란에서 focus를 해제한 경우 동작 ( 변경 X ) -->
+      <input type="text" name="age" id="age" onblur="lower2()" />
+    </div>
+    <script>
+      function lower() {
+        // alert("onchange()");
+        // name 대문자로 입력이 들어오면 소문자로 변경
+        let name = document.querySelector("#name");
+        name.value = name.value.toLowerCase();
+      }
+
+      function lower2() {
+        alert("onblur()");
+      }
+    </script>
+  </body>
+</html>

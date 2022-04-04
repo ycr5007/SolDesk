@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div * {
+        padding: 10px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>숫자 맞추기 게임</h3>
+    <p>
+      이 게임은 컴퓨터가 생성한 숫자를 맞추는 게임입니다.
+      <br />
+      숫자는 1부터 100 사이에 있습니다.
+    </p>
+    <div>
+      <label> 숫 자 </label>
+      <input type="text" name="num1" id="num1" size="5" />
+      <button type="button" onclick="guess()">입력</button>
+    </div>
+    <div>
+      <label>추측횟수</label>
+      <input type="text" name="count" id="count" value="0" size="5" readonly />
+    </div>
+    <div>
+      <label> 힌 트 </label>
+      <input type="text" name="hint" id="hint" readonly />
+    </div>
+
+    <script>
+      let com = Math.floor(Math.random() * 100) + 1;
+      function guess() {
+        let user = document.querySelector("#num1").value;
+        let cnt = Number(document.querySelector("#count").value);
+        let hint = document.querySelector("#hint");
+        if (user == com) {
+          document.querySelector("button").setAttribute("disabled", "");
+          hint.value = "정답입니다.";
+        } else {
+          if (user > com) {
+            hint.value = "DOWN";
+            cnt++;
+          } else {
+            hint.value = "UP";
+            cnt++;
+          }
+        }
+        if (cnt >= 5) {
+          document.querySelector("button").setAttribute("disabled", "");
+          hint.value = "틀렸습니다 ... 정답 : " + com;
+        }
+        document.querySelector("#count").value = cnt;
+      }
+    </script>
+
+    <script>
+      // 강사님 정답
+      const random = Math.floor(Math.random() * 100) + 1;
+      let nGuess = 0;
+      function guess2() {
+        let num1 = document.querySelector("#num1").value;
+
+        nGuess++;
+        let result = "";
+        if (random > num1) {
+          result = "DOWN";
+        } else if (random < num1) {
+          result = "UP";
+        } else if (ramdom == num1) {
+          result = "OK";
+        }
+        document.querySelector("#count").value = nGuess;
+        document.querySelector("#hint").value = result;
+      }
+    </script>
+  </body>
+</html>

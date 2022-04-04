@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <table id="outside">
+      <tr>
+        <td id="t1">one</td>
+      </tr>
+      <tr>
+        <td id="t2">two</td>
+      </tr>
+    </table>
+    <script>
+      // t2 요소의 텍스트 값이 three 라면 two 로 변경, text 값이 two 라면 three 로 변경 (table을 클릭하면 실행)
+      const table = document.querySelector("#outside");
+      table.addEventListener("click", function (e) {
+        let t2 = document.getElementById("t2");
+        if (t2.innerHTML == "three") {
+          t2.innerHTML = "two";
+        } else {
+          t2.innerHTML = "three";
+        }
+      });
+    </script>
+  </body>
+</html>

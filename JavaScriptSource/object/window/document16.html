@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- action 값이 없으면 submit 한 페이지로 전송 -->
+    <form action="">
+      <div>
+        <label for="name">이름</label>
+        <input type="text" name="name" id="name" />
+      </div>
+      <div>
+        <label for="password">비밀번호</label>
+        <input type="password" name="password" id="password" />
+      </div>
+      <div>
+        <label for="age">나이</label>
+        <input type="number" name="age" id="age" />
+      </div>
+      <div>
+        <button type="submit" onclick="checkForm()">전송</button
+        ><button type="reset">취소</button>
+      </div>
+    </form>
+    <script>
+      function checkForm() {
+        // 태그가 갖고 있는 기본 동작 제어
+        event.preventDefault();
+
+        // 값 X 사용자의 입력 요소를 가져옴
+        let name = document.querySelector("#name");
+        console.log(name);
+        let password = document.querySelector("#password");
+        let age = document.querySelector("#age");
+
+        // 각 요소의 값들이 없으면 경고창 보낸 후, 입력할 수 있도록 focus 지정
+        if (name.value == "") {
+          alert("이름을 입력해주세요");
+          name.focus();
+          return;
+        } else if (password.value == "") {
+          alert("비밀번호를 입력해주세요");
+          password.focus();
+          return;
+        } else if (age.value == "") {
+          alert("나이를 선택해주세요");
+          age.focus();
+          return;
+        }
+
+        // form submit();
+        document.querySelector("form").submit();
+      }
+    </script>
+  </body>
+</html>

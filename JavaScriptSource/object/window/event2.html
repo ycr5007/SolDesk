@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body onload="loadEvent()">
+    <input
+      type="radio"
+      name="color"
+      id=""
+      onclick="changeColor('lightblue')"
+    />파랑색
+    <input type="radio" name="color" id="" onclick="changeColor('green')" />녹색
+    <script>
+      function changeColor(color) {
+        document.body.style.background = color;
+      }
+
+      function loadEvent() {
+        document.body.style.background = "red";
+      }
+    </script>
+  </body>
+</html>

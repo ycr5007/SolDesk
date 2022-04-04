@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="">
+      <div>
+        <input type="text" name="num1" id="" />
+        <select name="op" id="">
+          <option value="+">+</option>
+          <option value="-">-</option>
+          <option value="*">*</option>
+          <option value="/">/</option>
+        </select>
+        <input type="text" name="num2" id="" />
+        =
+        <input type="text" name="result" id="" />
+      </div>
+      <input type="button" value="계산" onclick="calc()" />
+    </form>
+    <script>
+      function calc() {
+        // num1 num2 값 가져오기
+        let num1 = parseInt(document.querySelector("[name='num1']").value);
+        let num2 = parseInt(document.querySelector("[name='num2']").value);
+        switch (document.querySelector("[name='op']").value) {
+          case "+":
+            document.querySelector("[name='result']").value = num1 + num2;
+            break;
+          case "-":
+            document.querySelector("[name='result']").value = num1 - num2;
+            break;
+          case "*":
+            document.querySelector("[name='result']").value = num1 * num2;
+            break;
+          case "/":
+            document.querySelector("[name='result']").value = num1 / num2;
+            break;
+        }
+      }
+    </script>
+  </body>
+</html>
