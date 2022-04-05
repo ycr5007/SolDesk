@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+            JavaScript 의 특징
+                Hoisting : 아직 선언되지 않은 함수 OR 변수를 끌어올려서 사용 
+                    함수 ) 함수가 같은 스크립트 태그 내 어딘가에 선언이 되어있다묜 끌어 올려서 사용이 가능하다.
+        */
+
+      myFunction();
+
+      function myFunction() {
+        console.log("Hello World");
+      }
+      // 같은 스크립트 태그 내에 있을 때 : 정상 작동
+      // 다른 스크립트 태그 에 있을 때 : hoisting2.html:17 Uncaught ReferenceError: myFunction is not defined
+    </script>
+  </body>
+</html>

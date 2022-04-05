@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+            JavaScript 에서 함수를 생성하는 방식
+
+                1 ) function 함수명() {} 
+
+                2 ) let 함수명 = function() {}
+                    § Hoisting 을 변수의 형태로 적용한다 ( var 을 제외한 다른 선언은 불가 )    
+        */
+      // f1(); // let 변수로 인해 Hoisting X
+      let f1 = function () {
+        console.log("누구인가 ! 누가 기침소리를 내었는가 !");
+      };
+      f1();
+    </script>
+  </body>
+</html>

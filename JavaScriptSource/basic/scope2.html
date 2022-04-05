@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+           scope : global , function , block
+       */
+      let value = "Here is global";
+      function myFunction() {
+        let value = "Here is function";
+        if (true) {
+          let value = "Here is block";
+          console.log(value); // block
+        }
+        console.log(value); // function
+      }
+
+      console.log(value); // global
+      myFunction();
+      console.log(value); // global
+    </script>
+  </body>
+</html>

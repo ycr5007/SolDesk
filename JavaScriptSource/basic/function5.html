@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="button" value="저장" onclick="test()" />
+    <script>
+      /*
+            callback 함수 (비동기식 함수 : 순서대로 진행 X, 조건이 충족되었을 때 함수 실행)
+                코드를 통해서 명시적으로 호출하는 함수가 아니라 개발자는 단지 함수를 등록하기만 하고, 
+                어떤 이벤트가 발생했을 때 혹은 특정 시점에 도달했을 때 시스템에서 호출되는 함수
+
+            Event(onclick, change, focus ...) 에서 함수를 지정(등록) 하고, 사용자가 해당 Event에 충족했을 때 함수를 호출
+            setTimeout(함수, 시간) : 특정 시점이 지난 후, 함수를 호출
+        */
+
+      setTimeout(function () {
+        console.log("2초가 지났습니다...");
+      }, 2000);
+      console.log("시작");
+      setTimeout(function () {
+        console.log("3초가 지났습니다...");
+      }, 3000);
+      console.log("끝");
+      setTimeout(function () {
+        console.log("1초가 지났습니다...");
+      }, 1000);
+    </script>
+  </body>
+</html>
