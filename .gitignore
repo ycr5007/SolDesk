@@ -95,4 +95,7 @@ local.properties
 hs_err_pid*
 replay_pid*
 
+JavaScriptSource/jQuery/jquery-3.6.0.js
+JavaScriptSource/jQuery/jquery-3.6.0.min.js
+
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java
