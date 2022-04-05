@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+            Regex
+                exec(비교문자열) : 정규표현식과 일치하는 문자열 리턴 
+                test(비교문자열) (★) : 정규표현식과 일치하는 문자열이 있으면 true, 없으면 false 리턴
+                match(정규식) : 정규표현식과 일치하는 문자열 리턴
+                search(정규식) : 정규표현식과 일치하는 문자열의 위치 리턴 (일치하지 않을경우 -1)
+                replace(정규식, "변경할 문자열") : Capturing 을 통해 Pattern을 묶어 문자열을 변경한다 ( $ : 패턴의 인덱스값을 나타낸다.) 
+                split() : 
+        */
+      const ko = "kokokoko";
+      const koooo = "kooookoooo";
+
+      console.log(ko.match(/(?:ko)+/)); // (?:Pattern) : 비Capturing > 캡쳐링은 하지 않고, 그룹화만 실행한다.
+      console.log(koooo.match(/(?:ko)+/));
+
+      let str = "javascript";
+      const pattern = /(java)(script)/;
+
+      console.log("");
+      console.log("----- 그룹화 및 캡쳐링 -----");
+      console.log(str.match(pattern));
+      console.log(str.replace(pattern, "$2-$1"));
+      console.log("----- 그룹화 -----");
+      console.log(str.match(/(?:java)(script)/));
+      console.log(str.replace(/(?:java)(script)/, "$2-$1"));
+    </script>
+  </body>
+</html>

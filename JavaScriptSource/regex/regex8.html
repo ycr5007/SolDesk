@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <!--
+    lookahead : 단어를 소비하지 않음
+    /ab(?=c)/ => abc 패턴을 찾되, c는 반환하지 않음
+
+    전방탐색 : ( ?= ) 
+    후방탐색 : ( ?<= )	
+    
+    ex) 비밀번호 ( 숫자, 영문, 특수문자 8 ~ 15자 )
+		(?=.*[\d])(?=.*[A-Za-z])(?=.*[!@#$%])[\dA-Za-z!@#$%]{8,15}
+		(?=.*[\d])(?=.*[A-Za-z])(?=.*[!@#$%]) : 조건
+		[\dA-Za-z!@#$%]{8,15} : 반환되는 값
+
+-->
+
+  <body>
+    <input type="email" name="email" />
+    <input type="button" value="전송" />
+    <script>
+      const regex =
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      document
+        .querySelector("[type='button']")
+        .addEventListener("click", function () {
+          if (!regex.test(document.querySelector("[name='email']").value)) {
+            alert("이메일 양식을 확인해주세요");
+            document.querySelector("[name='email']").value = "";
+          }
+        });
+    </script>
+  </body>
+</html>
