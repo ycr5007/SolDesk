@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./jquery-3.6.0.min.js"></script>
+    <style>
+      p {
+        display: inline-block;
+        height: 60px;
+        width: 120px;
+        text-align: center;
+        line-height: 60px;
+        border: 2px solid black;
+      }
+      .aqua {
+        background-color: #0ff;
+      }
+      .red {
+        background-color: red;
+      }
+      .green {
+        background-color: green;
+      }
+      .yellow {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="p1">내용1</p>
+    <p id="p2" class="red">내용2</p>
+    <p id="p3">내용3</p>
+    <p id="p4" class="green">내용4</p>
+    <p id="p5" class="yellow">내용5</p>
+    <p id="p6"></p>
+    <script>
+      // attr(속성, 값), css(속성, 값), removeClass("클래스명"), addClass("클래스명"), toggleClass("클래스명"), hasClass("클래스명")
+      $("#p1").addClass("aqua");
+      $("#p2").removeClass("red");
+      $("#p3").toggleClass("green");
+      $("#p4").toggleClass("green"); // Class 가 있으면 적용, 없으면 제거
+      if ($("#p5").hasClass("yellow")) {
+        $("#p6").html("있다");
+      } else {
+        $("#p6").html("없다");
+      }
+    </script>
+  </body>
+</html>

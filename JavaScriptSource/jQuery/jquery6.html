@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <h1 class="header" onclick="deleteH1()">Header1</h1>
+    <h2>Header2</h2>
+    <h1 onclick="">Header3</h1>
+
+    <script>
+      $(".header").click(function () {
+        // $(this).remove();
+
+        // h1 태그의 class 속성만 제거
+        $(this).removeClass("header");
+      });
+
+      //   function deleteH1() {
+      //     // 삭제할 요소 가져오기
+      //     let h1 = document.querySelector("h1");
+      //     // Tag 전체 제거
+      //     // h1.remove();
+
+      //     // Tag 내 속성만 제거
+      //     h1.removeAttribute("class");
+      //   }
+    </script>
+  </body>
+</html>

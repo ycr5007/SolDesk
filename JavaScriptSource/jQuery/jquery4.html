@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <ul>
+      <li>First item1</li>
+      <li>First item2</li>
+      <li>First item3</li>
+      <li>First item4</li>
+    </ul>
+    <ul>
+      <li>Last item1</li>
+      <li>Last item2</li>
+      <li>Last item3</li>
+      <li>Last item4</li>
+    </ul>
+    <script>
+      // 첫번째 ul 태그의 li만 가져오기 ( CSS :first ) - 필터링
+      let ulList1 = $("ul:first");
+      console.log(ulList1);
+
+      let ulList2 = $("ul:last");
+      console.log(ulList2);
+    </script>
+  </body>
+</html>

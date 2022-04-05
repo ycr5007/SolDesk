@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <button type="button">Hello World</button>
+    <div><img src="https://via.placeholder.com/150" alt="placeholder" /></div>
+    <input type="button">변경</input>
+    <script>    
+      //   let button = document.querySelector("button");
+      //   // button 태그에 name 속성 추가
+      //   button.setAttribute("name", "hello");
+      //   // button 태그에 disabled 속성 추가
+      //   button.setAttribute("disabled", "");
+
+      // jQuery 에서 속성 추가 OR 변경 => attr()
+      let b = $("button");
+      b.attr("name", "hello");
+      b.attr("disabled", "");
+
+
+      let changeImg = "https://via.placeholder.com/300";
+      $("[type='button']").click(function(){
+        let temp = $("img").attr("src");
+        $("img").attr("src", changeImg);
+        changeImg = temp;
+      });
+
+
+      let change = true;
+      if(change){
+          $("img").attr("src", "https://via.placeholder.com/300");
+          change = false;
+        }else{
+          $("img").attr("src", "https://via.placeholder.com/200");
+          change = true;
+      }
+    </script>
+  </body>
+</html>

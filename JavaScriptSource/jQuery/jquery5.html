@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div id="ex">여기는 DIV 영역입니다</div>
+    <a href="#" id="get">div 요소 내용 출력</a>
+    <a href="#" id="set">div 요소 내용 변경</a>
+    <script>
+      let temp2 = "변경되었습니다.";
+      let div = $("#ex");
+      // #get 태그를 클릭하면 div 요소를 출력
+      $("#get").click(function () {
+        console.log(div.html());
+      });
+
+      // #set 태그를 클릭하면 div 요소를 변경
+      $("#set").click(function () {
+        let temp = div.html();
+        div.html(temp2);
+        temp2 = temp;
+      });
+    </script>
+  </body>
+</html>

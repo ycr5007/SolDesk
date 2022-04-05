@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./jquery-3.6.0.min.js"></script>
+    <script>
+      const array1 = [1, 3, 5, 7];
+
+      // forEach 기본구문
+      array1.forEach(function (item) {
+        console.log(item);
+      });
+      // 화살표 함수
+      array1.forEach((item) => {
+        console.log(item);
+      });
+      // for-of 문 활용
+      for (let i of array1) {
+        // for-in
+        console.log(i);
+      }
+
+      console.log("");
+      // JQuery 활용 ①
+      $.each(array1, function (i, val) {
+        console.log(i + " : " + val);
+      });
+
+      // JQuery 활용 ②
+      $(array1).each(function (i, val) {
+        console.log(i + " : " + val);
+      });
+    </script>
+  </body>
+</html>
