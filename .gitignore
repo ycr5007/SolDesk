@@ -97,5 +97,6 @@ replay_pid*
 
 JavaScriptSource/jQuery/jquery-3.6.0.js
 JavaScriptSource/jQuery/jquery-3.6.0.min.js
+JavaScriptSource/jQuery/bootstrap.min.css
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java
