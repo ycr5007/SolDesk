@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+      AJax ( Asynchronous JavaScript and XML ) 
+        XML ? 
+        JSON ? ( JavaScript Object Notation ) : Javascript 객체 문법을 따르는 문자 기반의 데이터 포맷 ( *.json )
+          § key / value 형태로 구성 ( 배열형태 가능 : [ ] )
+          § Note: 문자열에서 네이티브 객체로 변환하는 것은 파싱(Parsing)이라고 합니다. 
+            네트워크를 통해 전달할 수 있게 객체를 문자열로 변환하는 과정은 문자열화(Stringification)이라고 합니다.
+          ※ https://developer.mozilla.org/ko/docs/Learn/JavaScript/Objects/JSON
+
+      - 서버와 데이터를 교환하는 기술의 하나
+      - 전체 페이지를 다시 적재하지 않고 웹페이지의 일부를 업데이트 할 수 있음
+      - 백그라운드 형태로 데이터를 서버로 보낼 수 있음
+      - JavaScript를 이용하여 AJax를 구현하는 방법과 JQuery를 이용하여 AJax를 구현하는 방법
+      
+
+      동기식 ( 페이지 이동 O )
+        - 전체를 수정하여 사용자에게 응답을 해줌 ( 응답 시간 ↑ )
+        
+          →	   요청	   →	    입력	 ↓
+        User 		    Server		      DB
+          ↑	   응답	   ←	    결과	 ←
+
+
+      비동기식 ( 페이지 이동 X )
+        - 필요한 부분만을 수정하여 사용자에게 응답을 해줌 ( 응답 시간 ↓ )
+
+        ex) Google Map / 실시간 정보 변동
+	
+
+    -->
+    <div></div>
+
+    <script>
+      /*
+        fetch() : 비동기 형태로 동작
+            Browser 에서 특정 시점에 동작을 한다 ( 순서대로 진행 X )
+        .then() : 함수 실행 후, 바로 다음에 다른 함수 실행 
+        .catch() : 에러발생 시, 실행하는 코드 ( Java의 try - catch문과 유사 )
+      */
+      fetch("./data/test.txt")
+        .then((response) => {
+          console.log("1");
+          return response.text();
+        })
+        .then((result) => {
+          console.log(result);
+          let div = document.querySelector("div");
+          div.innerHTML = result;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      console.log("2"); //
+    </script>
+  </body>
+</html>
