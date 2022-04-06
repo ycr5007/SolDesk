@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <form action="" method="get">
+      <div>
+        <label for="username">이름</label>
+        <input type="text" name="username" id="username" />
+      </div>
+      <div>
+        <label for="password">비밀번호</label>
+        <input type="password" name="password" id="password" />
+      </div>
+      <div>
+        <label for="addr">주소</label>
+        <input type="text" name="addr" id="addr" />
+      </div>
+      <button type="button" id="modify">수정</button>
+      <button type="button" id="read">보기</button>
+      <button type="button" id="delete">삭제</button>
+
+      <script>
+        // form 요소 가져오기
+        let form = $("form");
+
+        /* read
+                action => jquery1.html
+                form 요소 중 username 은 제거하고 전송
+        */
+        $("#read").click(function () {
+          $(form).attr("action", "jquery1.html");
+          $("#username").remove(); // 해당 속성 제거
+          $(form).submit();
+        });
+
+        /* modify
+                action => jquery2.html
+                form 안에 있는 데이터 전부 제거한 후 전송
+        */
+        $("#modify").click(function () {
+          $(form).attr("action", "jquery2.html");
+          $(form).empty(); // 모두 제거
+          $(form).submit();
+        });
+
+        /* delete
+                action => jquery3.html
+                form 안에 있는 데이터 전부 제거한 후, 새로운 form 요소를 추가하여 전송
+        */
+        $("#delete").click(function () {
+          $(form).attr("action", "jquery3.html");
+          $(form).empty(); // 모두 제거
+          $(form).append("<input type='text' name='no' value='3'>");
+          $(form).submit();
+        });
+      </script>
+    </form>
+  </body>
+</html>

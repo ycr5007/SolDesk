@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <h1>Simple HTML</h1>
+    </div>
+    <div id="content">
+      <p>This is a <i>simple</i> HTML file</p>
+    </div>
+    <div class="callout">
+      <p>this is as fancy aswe'll get!</p>
+    </div>
+    <p>
+      IDs (such as <span class="code">#content</span>) are unique (there can
+      only be one per page).
+    </p>
+    <p>
+      Classes (such as <span class="code">.callout</span>) can be used on many
+      elements
+    </p>
+    <div id="callout2" class="callout fancy">
+      <p>A single HTML element can have multiple classes.</p>
+    </div>
+
+    <script>
+      let content = $("#content");
+
+      const p1 = $("<p>I was create dynamically</p>");
+      content.prepend(p1);
+
+      const p2 = $("<p>i was also create dynamically</p>");
+      content.append(p2);
+    </script>
+  </body>
+</html>
