@@ -103,5 +103,7 @@ Servers/
 MANIFEST.MF
 catalina.policy
 catalina.properties
+*.project
+*.classpath
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java
