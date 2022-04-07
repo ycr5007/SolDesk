@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../jQuery/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div></div>
+    <script>
+      /*
+            상태코드
+                1xx (정보) : 요청을 받았으며 프로세스를 계속 진행
+                2xx (성공) : 요청을 성공적으로 받았으며 인식했고 수용
+                3xx (리다이렉션) : 요청 완료를 위해 추가 작업 조치가 필요
+                4xx (클라이언트 오류) : 요청의 문법이 잘못되었거나 요청을 처리할 수 없음
+                5xx (서버 오류) : 서버가 명백히 유효한 요청에 대한 충족을 실패
+        */
+
+      $.ajax({
+        url: "", // (필수 Option) (fetch(url).then)
+        //   type: 'get', (생략 가능) Default > get
+        //   data: formData, (생략 가능) 전송할 데이터
+        dataType: "Type", // (필수 Option) 요청 데이터 타입 ( html / txt / jason ... (비동기식으로 주고받을 수 있는 모든 데이터))
+        success: function (data) {
+          // 서버로부터 요청한 결과가 도착하면 호출 (.then) (Callback 함수) - 나중에 호출이 되면 그떄 동작
+        },
+        error: function () {
+          // 서버가 응답을 하지 않았을 경우 호출 (.catch) (Callback 함수)
+        },
+      });
+
+      $.ajax({
+        url: "./data/test.txt",
+        dataType: "text",
+        success: function (data) {
+          console.log(data);
+          $("div").html(data);
+        },
+        error: function (xhr, status, error) {
+          console.log(status);
+          console.log(xhr);
+          console.log(error);
+        },
+      });
+    </script>
+  </body>
+</html>

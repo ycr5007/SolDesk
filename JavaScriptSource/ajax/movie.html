@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./movie.css">
   </head>
   <body>
+    <h6 style="height: 12px; margin: 4">AJax Version</h6>
     <form action="">
       <div class="box1">일별 박스 오피스</div>
       <div class="box2">
@@ -67,8 +68,6 @@
     </form>
     <script>
         
-        ;
-        
         function init() {
             
             // 오늘날짜
@@ -91,40 +90,6 @@
             document.querySelector("#selDay").value = day;
         }
         init();
-
-        // 영화 상세정보 출력
-        function show(movieCd){
-            let url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=" + movieCd;
-
-            fetch(url)
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data);
-                let str = ""
-                
-                // 영화제목, 영어제목, 상영시간, 감독, 출연배우
-
-                let show = data.movieInfoResult.movieInfo;
-                str += "<p><span> 영화제목 : </span>" + show.movieNm + "</p>"
-                str += "<p><span> 영문제목 : </span>" + show.movieNmEn + "</p>"
-                str += "<p><span> 상영시간 : </span>" + show.showTm + " 분 </p><hr>"
-                str += "<p><ul><span> 감독 </span>"
-                show.directors.forEach((element) =>{
-                    str += "<li>" + element.peopleNm + "</li>";
-                })
-                str += "</ul></p><hr><p><ul><span> 배우 </span>"
-                show.actors.forEach((element) => {
-                    str += "<li>" + element.peopleNm + "</li>";
-                })
-                str += "</ul></p>";
-                document.querySelector(".box3").innerHTML = str;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-        }
 
         // 영화 리스트
         function getMovieInfo(){
@@ -162,11 +127,50 @@
             })
         }
 
-        
+        // 영화 상세정보 출력
+        function show(movieCd){
+            let url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=f5eef3421c602c6cb7ea224104795888&movieCd=" + movieCd;
+
+            fetch(url) // (get) 으로 요청 처리
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                let str = ""
+                
+                // 영화제목, 영어제목, 상영시간, 감독, 출연배우
+
+                let show = data.movieInfoResult.movieInfo;
+                str += "<p><span> 영화제목 : </span>" + show.movieNm + "</p>"
+                str += "<p><span> 영문제목 : </span>" + show.movieNmEn + "</p>"
+                str += "<p><span> 상영시간 : </span>" + show.showTm + " 분 </p><hr>"
+                str += "<p><ul><span> 감독 </span>"
+                    // Json 에서는 Undefined 를 인식하지 못함 ( null )
+                show.directors.forEach((element) =>{
+                    str += "<li>" + element.peopleNm + "</li>";
+                })
+                // 출연 배우 인원 수
+                let length = show.actors.length;
+                str += "</ul></p><hr><p><ul><span> 배우 ( 총 : " + length +  " 명 ) </span>"
+                show.actors.forEach((element) => {
+                    str += "<li>" + element.peopleNm + "</li>";
+                })
+                str += "</ul></p>";
+                document.querySelector(".box3").innerHTML = str;
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        }
+
         // 확인버튼 가져온 후 Event 연결
         document.querySelector("[type='button']").addEventListener("click", getMovieInfo);
         
-        
+        // XHR (XMLHttpRequest) : Ajax 요청을 처리하는 API (코드가 복잡하여, 사용 X) > 개편된 버전이 JQuery 에 존재
+            /*
+                XHR (AJAX 연동 API)을 사용할 때 JQuery 에서 추가 Method 가 생겼으나, 현재 fetch-then 을 사용하며 XHR 은 사라짐...
+            */
+
     </script>
   </body>
 </html>
