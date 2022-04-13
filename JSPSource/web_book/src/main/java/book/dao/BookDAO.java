@@ -103,48 +103,28 @@ public class BookDAO {
 		return false;
 	}
 	
-	public ArrayList<BookDTO> searchBook(String writer) {
+	public ArrayList<BookDTO> searchBook(String keyword, String criteria) {
 		ArrayList<BookDTO> list = new ArrayList<BookDTO>();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from booktbl where writer = ? order by code asc";
+		String sql = "";
+		
 		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, writer);
+			if(criteria.equals("code")){
+				sql = "select * from booktbl where code = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, Integer.parseInt(keyword));
+			}else {
+				sql = "select * from booktbl where writer like '%' || ? || '%' order by code asc";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, keyword);
+			}
+			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				BookDTO dto = new BookDTO();
 				dto.setCode(rs.getInt("code"));
-				dto.setTitle(rs.getString("title"));
-				dto.setWriter(writer);
-				dto.setPrice(rs.getInt("price"));
-				
-				list.add(dto);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rs);
-			close(pstmt);
-			close(con);
-		}
-		return list;
-	}
-	
-	public ArrayList<BookDTO> searchBook(int code) {
-		ArrayList<BookDTO> list = new ArrayList<BookDTO>();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select * from booktbl where code = ?";
-		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, code);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				BookDTO dto = new BookDTO();
-				dto.setCode(code);
 				dto.setTitle(rs.getString("title"));
 				dto.setWriter(rs.getString("writer"));
 				dto.setPrice(rs.getInt("price"));
