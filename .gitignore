@@ -99,11 +99,12 @@ JavaScriptSource/jQuery/jquery-3.6.0.js
 JavaScriptSource/jQuery/jquery-3.6.0.min.js
 JavaScriptSource/jQuery/bootstrap.min.css
 
+
 Servers/
 MANIFEST.MF
 catalina.policy
 catalina.properties
 *.project
 *.classpath
-
+bootstrap-4.6.1-dist/
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java
