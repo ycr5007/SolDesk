@@ -1,0 +1,194 @@
+※ 마지막 게시글의 번호
+	SQL : select max([PK]) from [tableName]
+※ 게시글의 개수
+	SQL : select count(*) from [tableName]
+	
+※ Dummy Data ( 댓글, 페이지, 검색 )
+	SQL : insert into [tableName]([PK], [Column]) (select [seq.nextval], [ColumnValue] from [tableName]);
+
+Reply Rogic
+	refURL : https://daspace.tistory.com/273?category=1171381
+	
+	DB
+		§ Parameter 
+			re_ref (원본글과 댓글들을 그룹화)
+				>> 원본 글의 re_ref 값과 동일하게 ( 원본글에 대한 정보(PK)를 남김 )
+			re_lev (댓글의 깊이를 나타내기 위한 속성(DEPTH))
+				>> 원본 글의 re_lev + 1
+			re_seq (댓글들의 순서를 나타내기 위한 속성(STEP)
+				>> 원본 글의 re_seq + 1 ( 같은 lev 의 댓글의 순서 정보 )
+				
+		§ 댓글 작성시 댓글을 최신 순으로 추출할 수 있어야 한다.
+			
+			① 기존 댓글의 re_seq 값을 업데이트 > 원본글을 제외하고 댓글을 모두 update
+				SQL : update [tableName] set re_seq = re_seq + 1 where re_ref = [원본글의 re_ref] and re_seq > [원본글의 re_seq]
+			
+			② Parameter 를 아래와 같이 지정하여 insert
+				SQL : insert into [tableName]([insertColumn], re_ref, re_lev, re_seq) values([insertValue], ref, lev, seq)
+					>> ref : 원본글의 re_ref
+					>> lev : 원본글의 re_lev + 1
+					>> seq : 원본글의 re_seq + 1
+		
+		※ 특정 게시물 그룹 조회
+			SQL : select [Column] from [tableName] where re_ref = [re_ref] order by re_seq asc;
+		※ 원본글과 댓글 전체 조회 ( order by bno : 사용 불가 )
+			SQL : select [Column] from board order by re_ref desc, re_seq asc;
+	
+	JSP
+		§ JSTL 을 활용해 list 와 동일하게 보여준다.
+		§ 단, 댓글의 경우 조건문을 통해 댓글임을 표현해준다.
+	
+		<c:forEach var="dto" items='${list }'>
+			<tr class="click-line" onclick="javascript:location.href='/hitUpdate.do?bno=${dto.bno }'"><!-- 리스트 목록 보여주기 -->
+				<td class='text-center'>${dto.bno }</td>
+				<td>
+				
+					<c:if test="${dto.re_lev != 0 }">
+						<span style="margin-left: ${dto.re_lev * 15 }px; display: inline-block;">└</span>
+					</c:if>
+					${dto.title }
+						>> 댓글의 lev 만큼 들여쓰기 (margin-left)
+				</td>
+				<td class='text-center'>${dto.name }</td>
+				<td class='text-center'>${dto.regdate }</td>
+				<td class='text-center'><span class="badge badge-pill badge-primary">${dto.readcount }</span></td>
+			</tr>		
+		</c:forEach>
+
+
+Paging Rogic
+	
+	DB (Oracle)
+		MySQL : limit 을 활용해 처리 가능
+		Oracle : rownum 을 활용해 처리 가능 ( 조회된 결과에 번호를 순서에 맞춰 부여 )
+	
+		1 ) select rownum, [Column] from [tableName] order by [PK] desc
+				>> PK 를 기준으로 내림차순 정렬하며, 그에 맞는 rownum 부여하고 전체 조회한다. ( 댓글 순서조회 X )
+		2 ) select rownum, [Column] from [tableName] where rownum <= [val] ( rownum > 0 : 사용 불가, 조회값 0 )
+				>> rownum 을 val 값 까지 조회한다. (정렬이 불가하기 떄문에, 다음과 같이 서브쿼리를 활용한다.)
+		3 ) select rownum, [Column] from (select [Column] from [tableName] where [PK] > 0 order by ref desc, seq asc) where rownum <= [val] 
+				>> 정렬된 값으로 rownum 을 val 까지 조회한다 ( Between 을 사용할 수 없어, 두 수 사이의 값을 조회하기 위해 다음과 같이 서브쿼리를 활용한다.
+		4 ) select * 
+				from (select rownum as rnum, A.* 
+					from (select [Column] from [tableName] where [PK] > 0 order by ref desc, seq asc)
+				A where rownum <= [startVal])
+			where rnum > [endVal]
+				>> 최종적으로 사용하는 조회 쿼리이며, rownum 이 endVal 부터 startVal 까지의 값을 조회하며, 댓글 그룹을 포함해 조회한다.
+		
+	
+	JAVA
+		DAO
+			getList 메소드 (매개 : SearchDTO > 현재 Page 정보를 가짐 / 반환 : List<BoardDTO>)
+			SQL 의 rownum 의 시작 값과 끝 값을 설정
+				>> pstmt.setInt(1, searchDto.getPage() * searchDto.getAmount());
+				>> pstmt.setInt(2, (searchDto.getPage() - 1) * searchDto.getAmount()) ;
+				
+			getTotal() : int 값을 반환하며, 전체 게시물의 개수를 조회한다.
+			
+		ListAction
+			- Parameter
+				┌ int : request.getParameter("page")
+				└ int : amount ( 페이지당 보여줄 게시글의 개수 )
+			- SearchDTO ( page , amount )
+			- getTotal() 메소드를 호출
+			- pageDTO ( total , SearchDTO )
+			- request 속성지정 ( pageDTO , list )
+		
+		SearchDTO
+			- int page 추가 : 사용자가 요청한 현재 페이지 번호
+			- int amount 추가 : 한 페이지마다 보여줄 게시물 개수
+		
+		PageDTO (new)
+			- int startPage : 화면에 보여줄 첫번째 페이지 번호 
+			- int endPage : 화면에 보여줄 마지막 페이지 번호
+			- boolean prev, next : 이전·다음 버튼을 보여줄 것인지 여부
+			- int total : 전체 게시물 수
+			- SearchDTO searchDTO : 검색어, 검색기준, 페이지번호, 사용자에게 보여줄 게시물 개수
+			
+			생성자 ( total , SearchDTO ) 
+				this.total / this.searchDTO
+				
+				- 현재 화면의 마지막 페이지 수 구하는 식
+				endPage = (int)(Math.ceil(searchDTO.getPage() / 10.0)) * 10;
+				
+				- 현재 화면의 시작 페이지 수 구하는 식
+				startPage = endPage - 9;
+				
+				- 끝나는 페이지 재계산 ( 페이지의 개수가 게시물의 개수를 초과하지 않도록 처리 )
+				int realEnd = (int)(Math.ceil((total / 1.0) / searchDTO.getAmount()));
+				if(realEnd < this.endPage)
+					this.endPage = realEnd;
+				
+				- prev·next 활성화 여부
+				this.prev = this.startPage > 1;
+				this.next = this.endPage < realEnd;
+			
+	JSP ( list.jsp )
+	
+		§ JSTL 을 활용해 페이지 번호를 출력 ( 때문에 href 속성을 URL 형식이 아닌, 값으로 전달한다. )
+		§ 사용 객체 : PageDTO ( startPage / endPage / prev·next (button) / total / searchDTO ( page / amount / criteria / keyword ) )
+	
+		<ul class="pagination"><!--하단의 페이지 나누기 부분-->
+		
+			<c:if test="${pageDTO.prev }">
+				<li class="page-item"><a href="${pageDTO.searchDTO.page - 10 }" class="page-link">이전</a></li>
+			</c:if>
+			
+			<c:forEach var="idx" begin="${pageDto.startPage }" end="${pageDto.endPage }">
+				<li class="page-item ${pageDto.searchDTO.page == idx?'active':'' }"><a href="${idx }" class="page-link">${idx }</a></li>
+			</c:forEach>
+			
+			<c:if test="${pageDTO.next }">
+				<li class="page-item"><a href="${pageDto.searchDTO.page + 10 }" class="page-link">다음</a></li>
+			</c:if>
+			
+		</ul>
+	
+		§ 페이지 이동 등 주된 작업은 JavaScript 를 통해 처리가 이루어진다.
+			hidden input 을 이용해 사용자가 요청한 페이지번호 / 한 페이지당 보여줄 게시글의 개수 를 form 태그에 실어 전송한다.
+			<form action="" id="actionForm">
+				<input type="hidden" name="page" value="${pageDto.searchDTO.page }"/>
+				<input type="hidden" name="amount" value="${pageDto.searchDTO.amount }"/>
+			</form>
+	
+	JavaScript
+		
+		let actionForm = $("#actionForm");
+	
+		$(".page-link").click(function(e){
+			>> .page-link : page를 이동할 수 있는 수단의 Class ( 페이지 번호 / next·prev )
+
+			e.preventDefault();
+				>> a 태그의 기능 중지
+
+			let page = $(this).attr("href");
+				>> 클릭한 a 태그의 href 속성이 갖는 값을 가져오기
+			
+			actionForm.find("[name='page']").val(page);
+				>> actionForm 안의 page 번호를 클릭한 a 태그의 번호로 교체
+			
+			actionForm.submit();
+		})
+		
+Paging / Search
+	DAO
+		getList(SearchDTO)
+			>> SearchDTO 내 criteria / keyword 를 가져와 검색어에 맞춰 DB를 조회한다
+			>> 가장 안쪽 서브쿼리 Select 의 조건 ( where [PK] > 0 and SearchDTO.criteria like '%' || [SearchDTO.keyword] || '%' )
+			>> if 조건을 통해 전체조회와 검색어 조회를 구분한다.
+		
+		getTotal(String criteria, String keyword)
+			>> getList와 동일하게, 전체조회와 검색어 조회를 구분한다.
+			
+	JSP
+		>> SearchForm 내 전송 데이터 : page(hidden), amount(hidden), criteria(select), keyword(text)
+		>> HiddenForm 내 전송 데이터 : page(hidden), amount(hidden), criteria(hidden = null), keyword((hidden = null)
+		
+	JavaScript
+		function (.SearchForm)
+			>> 검색기준, 검색어를 전송
+			
+			$('#search').find("[name='page']").val(1);
+				>> 검색이 되면 1 페이지로 돌아가기 때문에, page 를 ( 1 ) 로 변경한다.
+		
+	

@@ -1,0 +1,85 @@
+Upload Check 항목
+
+	1 . form Tag > ( enctype="multipart/form-data" ) 설정
+		§ request.getParameter 로 form 태그의 값을 가져오는 것이 불가능해진다.
+		① input Tag > <input type="file" name="" [accept="유저에게 확장자 안내 가이드(초기값)"] /> 
+			file 타입은 value 설정이 불가 ( 보안상의 이유로 시스템에서 불가처리 > 단, JavaScript를 통해 설정 가능 )
+		
+	2 . UploadUtil > Util 로써 활용하기에 Class 분리 ( 반환 : HashMap<String, String> / 매개 : HttpServletRequest )
+		① boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+			>> 해당 form 의 enctype 이 "multipart/form-data" 로 설정되어있는지 여부
+		② DiskFileItemFactory [factory] = new DiskFileItemFactory();
+			>> FileItem 오브젝트를 생성하는 Class
+		③ ServletFileUpload [upload] = new ServletFileUpload([factory]);
+			>> Servlet 프로그램을 경유하며, 실제 Upload 된 파일 데이터를 취득하는 클래스
+		④ List<FileItem> [items] = [upload].parseRequest([request]);
+			>> form Tag 에서 입력된 모든 데이터를 List 에 담는 작업
+		⑤ [item].isFormField()
+			>> 현재 갖고있는 FileItem 이 formfield 인지 file 인지 확인하는 메소드 ( 반환 : boolean )
+				formField : text, email, password, select ... 일반적인 입력 form
+					[item].getFieldName() : 현재 FileItem 의 input name 속성 값을 가져온다.
+					[item].getString("encoding") : 현재 FileItem 의 input value 값을 가져온다 ( encoding 적용 )
+				file : file
+					[item].getName() : 현재 FileItem 의 업로드 파일 이름을 가져온다.
+		⑤ String path = "[path]";
+			>> Server 의 저장소 경로 지정 ( "실제 파일들이 서버에 저장되는 저장소" )
+		⑥ UUID [uuid] = UUID.randomUUID();
+			>> 파일 이름의 중복값을 방지하기 위해, 128 bit 로 구성된 임의의 값을 파일명 앞에 더해 저장한다 . ( uuid.toString() >> ce5a3549-27d8-48d5-abe4-5ed08f9b4de7 )
+		⑦ File [uploadFile] = new File([path] + "\\" + [uuid].toString() + "_" + [fileName]);
+			>> path : 서버 저장소 경로
+			>> "\\" : 저장소 / 파일 사이 구분자
+			>> uuid.toString() : 파일 이름의 고유값 부여를 위한 메소드
+			>> "_" : uuid 임의 값과 실제 파일 명을 구분해주는 구분자
+			>> fileName : 사용자가 업로드한 실제 파일명
+		⑧ [uploadFile].getName();
+			>> 실제 서버에 업로드 된 파일명
+		
+		!! 다운로드를 실행할 파일의 경우, QueryString 으로 값을 전달하기 전 인코딩을 해주어야 한다.
+			String [encodeName] = URLEncoder.encode([uploadFile].getName(), "encoding");
+		
+	3 . UploadAction >> 실제 DB 작업을 위해 UploadUtil 을 호출하여 HashMap 을 통해 request.getParameter() 를 실행한다.
+		>> UploadUtil 의 return 값이 HashMap<String, String> 이기 때문에, 값 호출은 dataMap.get([key]) 를 통해 실행한다.
+
+Download Check 항목	
+
+	1 . JSP File > QueryString 으로 fileName 을 Download 실행할 Class 로 전달
+		>> request.getParameter(); 통해 값 호출 가능 
+	2 . DownloadAction > Action 을 상속받으며, request / response 객체를 매개변수로 받는다. ( 단, 페이지 이동은 없기 때문에 path 지정 X )
+		① BufferedInputStream [bis] = new BufferedInputStream(new FileInputStream([path + fileName]));
+			>> File 입출력을 위한 스트림 생성
+		② response.setContentType("application/octet-stream");
+			>> 무조건 다운로드가 실행되도록 Content 설정
+		③ URLEncoder.encode([fileName], "encoding").replaceAll("\\+", "%20");
+			>> URLEncoder : 다운로드 받을 때의 파일 이름 Encoding ( uuid 의 고유값 포함 파일명 )
+			>> replaceAll("\\+", "%20") : 파일 이름의 공백 처리 ( "%20" : 유니코드 "공 백" )
+		
+		!! java.lang.IllegalStateException 에러 해결 ( 다운로드는 정상적으로 작동하나, 에러 발생 ) >> JSP 에서 Servlet 으로 변환하는 과정에서 JspWriter 와 충돌이 생겨 에러 발생 
+JSP의 경우	▶ out.clear();
+				>> 기존에 있는 JSP 의 내장객체 OutputStream 을 제거
+			▶ out = pageConetext.pushBody();
+				>> 새로운 OutputStream 을 생성하기 위해 공간 마련
+		
+		④ String [cuttingFileName] = fileName.substring(fileName.indexOf("_") + 1);
+			>> 사용자가 파일을 다운로드 받을 때, uuid 를 제외한 업로드 파일명으로 다운로드 받을 수 있도록 처리
+		⑤ response.setHeader("Content-Disposition", "attachment;fileName=" + [cuttingFileName]);
+			>> Content-Disposition : Response Body 에 오는 컨텐츠의 성향, 특징을 알려주는 속성
+				1 ) inline : 웹페이지 자체이거나 웹페이지의 일부 ( 웹페이지 안에서 보여주는 것 )
+				2 ) attachment : 다운로드 되거나 로컬에 저장시키는 용도 ( 반드시 다운로드를 실행 )
+					ex > attachment;fileName=?.xxx : [fileName] 값으로 다운로드 작업 실행
+					설정확인 방법 :: 페이지정보 > Network > response Hearders > Content-Disposition : attachment;fileName=[filename]
+		⑥ BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
+			>> 응답 출력 스트림 생성 ( 바이트 형태로 파일 출력 )
+		⑦ 	int numRead = 0;
+				>> 입출력 바이트 수
+			byte[] b = new byte[4096];
+				>> 한번에 읽는 바이트 수 ( 배열의 길이 : 한번에 읽을 수 있는 버퍼 크기 ) 
+			while((numRead = bis.read(b, 0, b.length)) != -1) {
+				>> FileRead : bis.read([byte[]], startIndex, EndIndex) > 배열에 있는 모든 값을 읽어들인다.
+				bos.write(b, 0, numRead);
+					>> FileWrite : bos.write([byte[]], startIndex, EndIndex) > 배열에 있는 모든 값을 담는다.
+			}
+		⑧ bos.flush();
+			>> 버퍼 내부 정리
+		  bos.close();
+		  bis.close();
+		  	>> 입출력 스트림 제거	
