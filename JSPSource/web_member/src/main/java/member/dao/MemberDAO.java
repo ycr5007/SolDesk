@@ -110,4 +110,26 @@ public class MemberDAO {
 		}
 		return false;
 	}
+	
+	// 중복 아이디 검사
+	public boolean checkId(String userid) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select userid from membertbl where userid = ?";
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userid);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return false;
+	}
 }

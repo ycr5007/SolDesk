@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp" %>
 <%
-	MemberDTO dto = (MemberDTO)session.getAttribute("loginDto");
+	// MemberDTO dto = (MemberDTO)session.getAttribute("loginDto");
 %>
 <form id="leaveform" action="leavePro.jsp" method="post">
 	<div class="card"  style="width: 40rem;margin:40px auto;">	
@@ -13,7 +13,7 @@
 	 	<div class="card-body">	
 			<div class="form-group row justify-content-center">		
 				<div class="col-sm-10">	
-					<input type="text" name="userid" id="userid" class="form-control" value="<%=dto.getUserid() %>" readonly/>
+					<input type="text" name="userid" id="userid" class="form-control" value="${loginDto.userid }" readonly/>
 			 		<small id="userid" class="text-info"></small>		
 				</div>
 			</div>	
@@ -32,10 +32,10 @@
 </form>
 
 <script>
-	let name = '<%=dto.getName() %>';
+	let name = '${loginDto.name}';
 </script>
-<script src="/js/menu.js"></script>
-<script src="/js/command.js"></script>
+<script src="../js/menu.js"></script>
+<script src="../js/command.js"></script>
 <script>
 	$(function(){
 		$("#leave").detach();

@@ -6,7 +6,16 @@ $(function(){
 		rules: {
 			userid: {
 				required: true,
-				validId: true
+				validId: true,
+				remote: {
+			        url: "checkId.jsp",
+			        type: "post",
+			        data: {
+			          	userid: function() {
+			          	  	return $( "#userid" ).val();
+			          	}
+			        }
+				}
 			},
 			password: {
 				required: true,
@@ -28,7 +37,8 @@ $(function(){
 		},
 		messages: {
 			userid: {
-				required: "아이디는 필수 입력항목입니다."
+				required: "아이디는 필수 입력항목입니다.",
+				remote: "이미 사용중인 아이디입니다."
 			},
 			password: {
 				required: "비밀번호는 필수 입력항목입니다."

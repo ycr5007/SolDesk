@@ -7,7 +7,7 @@
 		<label for="userid" class="col-sm-2 col-form-label">아이디</label>
 		<div class="col-sm-6">
 			<input type="text" name="userid" id="userid" class="form-control" placeholder="아이디를 입력하세요"/>
-			 <small id="userid" class="text-info"></small>
+			<small id="userid" class="text-info"></small>
 		</div>
 	</div>
 	<div class="form-group row justify-content-center">
@@ -56,7 +56,30 @@
 	</div>
 </form>
 </div>
-
+<script>
+/*
+	function dupId(){
+		// 사용자 입력 ID 가져오기
+		let userid = $('#userid').val();
+		$.ajax({
+			url: 'checkId.jsp',
+			type: 'post',
+			data: {
+				userid: userid
+			},
+			success: function(data){
+				console.log(data);
+				
+				if($.trim(data) == "true"){
+					alert("사용가능한 아이디 입니다.");
+				}else{
+					alert("이미 사용중인 아이디입니다.");
+				}
+			}
+		})
+	}
+*/
+</script>
 <%-- 사용자 validate 코드 삽입하기 --%>
 <script src="../js/joinRegex.js"></script>
 <script src=""></script>

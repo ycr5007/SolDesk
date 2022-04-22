@@ -34,13 +34,13 @@
 	</div>		
 </form>
 <%
-	MemberDTO dto = (MemberDTO)session.getAttribute("loginDto");
+	// MemberDTO dto = (MemberDTO)session.getAttribute("loginDto");
 %>
 <script>
-	let name = '<%=dto.getName() %>';
+	let name = '${loginDto.name}';
 </script>
-<script src="/js/menu.js"></script>
-<script src="/js/command.js"></script>
+<script src="../js/menu.js"></script>
+<script src="../js/command.js"></script>
 <script>
 	// script (DOM 이 모두 load 된 후에 확정적으로 스크립트를 동작시키는 방법)
 		// > DOM 이 동적으로 추가되는 경우나 이미 생성된 경우 사용
