@@ -1,0 +1,26 @@
+EL ( Expression Language ) - JSP 내( <% %> )에서 값을 쉽게 표현하기 위한 언어
+	산술 / 관계 / 조건 / 논리 연산자 가능
+
+	request, session 영역에 있는 값을 쉽게 불러서 사용 가능
+
+	문법 : ${ Code } ( JQuery 와 구분 주의 > $( ) )
+
+	값을 검색하는 순서 : page → request → session → application
+
+JSTL
+	EL 과 같이 사용하며, 조건 / 반복문을 Tag 형태로 표현하기 위한 언어
+	
+	사용 전, JSTL 라이브러리 로딩 필요
+		JSTL:core ( <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %> )
+
+DBCP ( DataBase Connection Pooling )
+	> 지원하는 라이브러리가 있음 ( tomcat / HikariCP )
+	> 커넥션을 미리 받아야 하기 때문에 설정 작업이 필요하다. ( https://tomcat.apache.org/tomcat-9.0-doc/jndi-datasource-examples-howto.html#Oracle_8i,_9i_&_10g )
+		1. Context configuration ( META-INF/context.xml )
+		2. web.xml configuration ( WEB-INF/web.xml )
+		3. getConnection() 수정 
+
+Pattern
+	- DAO / DTO
+	- command ( servlet )
+		모든 요청을 한 곳으로 모아, 각각의 응답을 처리해주는 servlet
