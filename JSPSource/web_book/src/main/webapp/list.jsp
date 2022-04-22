@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	ArrayList<BookDTO> list = (ArrayList<BookDTO>)request.getAttribute("list");
+	//ArrayList<BookDTO> list = (ArrayList<BookDTO>)request.getAttribute("list");
 %>
 
 <%@ include file="./layout/header.jsp" %>
@@ -20,14 +20,24 @@
 		</thead>
 		<tbody>
 			<!-- 도서목록 (반복) -->
-			<% for(BookDTO dto : list){ %>
-				<tr style="cursor: pointer" onclick="javascript:location.href = '#'">
-					<th scope="row"><%=dto.getCode() %></th>
-					<td><%=dto.getTitle() %></td>
-					<td><%=dto.getWriter() %></td>
-					<td><%=dto.getPrice() %></td>
+			<%--
+				<% for(BookDTO dto : list){ %>
+					<tr style="cursor: pointer" onclick="javascript:location.href = '#'">
+						<th scope="row"><%=dto.getCode() %></th>
+						<td><%=dto.getTitle() %></td>
+						<td><%=dto.getWriter() %></td>
+						<td><%=dto.getPrice() %></td>
+					</tr>
+				<%} %>
+			--%>
+			<c:forEach var="dto" items='${list }'>
+				<tr>
+					<td>${dto.code }</td>
+					<td>${dto.title }</td>
+					<td>${dto.writer }</td>
+					<td>${dto.price }</td>
 				</tr>
-			<%} %>
+			</c:forEach>
 		</tbody>
 	</table>
 <%@ include file="./layout/footer.jsp" %>
