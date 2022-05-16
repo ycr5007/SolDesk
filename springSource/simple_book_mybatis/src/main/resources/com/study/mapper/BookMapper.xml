@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.mapper.BookMapper">
+	<!-- SQL 문 작성 -->
+	<select id="select" resultType="com.study.myapp.dto.BookDTO">
+		select * from booktbl
+	</select>
+	
+	<select id="search" resultType="com.study.myapp.dto.BookDTO">
+		select * from booktbl where ${criteria} = #{keyword}
+		<!-- ${val } : ' = ' 로만 처리 하는 where 절의 경우, ${val } 값을 고정시켜서 사용 가능 ( Column 명 ... ) -->
+		<!-- <if test="criteria=='code'.toString()">
+			code = #{keyword}
+		</if>
+		<if test="criteria=='writer'.toString()">
+			writer like '%' || #{keyword} || '%'
+		</if> -->
+	</select>
+	
+	<insert id="insert">
+		insert into booktbl(code, title, writer, price) values(#{code}, #{title}, #{writer}, #{price})
+	</insert>
+	
+	<update id="update">
+		update booktbl set price = #{price} where code = #{code}
+	</update>
+	
+	<delete id="delete">
+		delete from booktbl where code = #{code}
+	</delete>
+</mapper>
