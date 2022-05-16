@@ -1,0 +1,226 @@
+SoftWare
+	AmaterasUML
+		https://takezoe.github.io/amateras-update-site/ ( 검색항목 2 중 Amateras 만 설치 )
+	Lombok
+		https://projectlombok.org/p2
+
+이클립스 설정 
+	General > workspace : Ecoding ( UTF-8 )
+	Java > Installed JREs : 11Version VM 추가
+	Web > HTML, CSS, JSP : Encoding ( UTF-8 )
+	Emmet > jsp 추가
+
+
+
+Spring 기초 ( https://yongku.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81Spring-%EB%B9%88Bean%EC%9D%B4%EB%9E%80?category=893456 )
+
+Spring Framework
+	스프링 환경설정 
+		properties
+			java-version : 수정
+			org.springframework-version : 수정
+		plugin > maven-compiler-plugin
+			source / target : java-version 으로 수정
+
+	Create Project
+		Create new Spring Stater Project - Spring Boot
+		
+		Spring Legacy Project - Spring Framework
+			> Spring MVC Project
+
+
+	XML 	: 	html 의 상위 호환
+			: 	태그를 직접 만들 수 있음
+			:	xmlns (네임스페이스) 태그를 어디에서 만들었는지 알 수 있는 정보
+	
+		1 ) xml		=> src/main/resources 폴더 ( classpath ) 에 생성
+					=> Spring Bean Configuration File
+					=> 실제 사용 : xml + annotation
+		2 ) java class 
+	
+	스프링 부트
+		1 ) java class
+		2 ) properties
+		3 ) yaml
+
+DI ( Dependency Injection ) 의존성 주입 
+
+	Annotation
+		어노테이션을 활성화 해주는 작업 必
+			> <context:component-scan base-package="package path" />
+			> 해당 패키지 내에 있는 Component 를 활성화 시킴
+	
+		@Component : 객체생성
+			> id 값 	: default > 클래스명 ( 단, 첫 문자는 소문자 )
+				: Component(" id ") > id 값
+			> @Service : service
+			> @Repository : DAO
+			> @Controller : action
+		@Autowired : 생성된 객체 Injection
+			> @Qualifier : 단독 사용 X, Autowired 와 함께 사용되며, 이름 부여의 목적
+
+
+Connection Pool : DB 에서 Connection 을 미리 받아, 관리하는 개념
+	JSP : Tomcat => ( context.xml , web.xml ) 통해 관리
+	Spring : HikariCP 사용
+		Open Source ( https://github.com/brettwooldridge/HikariCP ) - Maven dependency 로 적용 가능
+		
+	DBCP
+		① DB 에서 Connection 을 미리 받아둔다.
+		② Application 에서 HikariCP 에 접근해, Connection 을 받아 쓰고, 객체를 닫아 반납
+	
+		Config.xml
+			( HikariCP Setting Property : https://freedeveloper.tistory.com/250 )
+			<!-- Connection Pool Setting -->
+			<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+				<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+				<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe" />
+				<property name="username" value="javadb" />
+				<property name="password" value="12345" />
+			</bean>
+			
+			<!-- HikariCP Setting -->
+			<bean id="ds" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+				<!-- hikariConfig 의 데이터 (Driver, URL, id, password) 를 생성자 통해 받아옴 -->
+				<constructor-arg ref="hikariConfig" />
+			</bean>
+		
+		DAO
+			( Config.xml 에서 설정한 HikariDataSource )
+			@Autowired
+			private DataSource ds; ( javax.sql.DataSource )
+			
+			Connection con = ds.getConnection(); ( DataSource 의 getConnection 을 사용하기 때문에, JdbcUtil 의 getConnection 사용 X )
+			
+	Java DB 작업 : JDBC
+		ⓞ Driver 로드 : ojdbc8.jar 내 드라이버 관련 정보 있음
+		① Connection : DB 서버와 연결
+			> DB 서버 주소, UserName, Password ..
+		② Statement : 쿼리문 전송
+			> PreparedStatement : ( ? ) Java의 변수를 사용하기 위해 ( SQL Injection 공격에 대응 )
+			§ DB 서버 동작
+				1 ) 문법 검사
+				2 ) 컴파일
+				3 ) 실행
+		③ ResultSet : DB 에서 반환 된 결과값을 객체에 담아 처리
+		
+	==> Spring FrameWork JDBC ( Spring 의 DB 작업 - MyBatis, ORM ... )
+		Spring Jdbc 사용 - JDBC 를 바탕으로 동작하며, 조금 더 편하게 작업 할 수 있음
+			① JdbcTemplate
+				Dependency 추가
+					<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+					<dependency>
+					    <groupId>org.springframework</groupId>
+					    <artifactId>spring-jdbc</artifactId>
+					    <!-- Spring 버전과 맞추는 것이 좋음 -->
+					    <version>5.3.19</version>
+					</dependency>
+					
+				config.xml bean 생성
+					<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+						<constructor-arg ref="ds" />
+					</bean>
+					
+				DAO JdbcTemplate 객체를 통해 Connection / PreparedStatement / ResultSet 실행
+					jdbcTemplate	query(sql , --RowMapper()) -- 전체 조회 ( 조건 X )
+									queryForObject(sql, --RowMapper(), where ? ... ) -- 한 행 조회
+									update(sql, where ? ... ) -- update, insert, delete 작업
+				
+				--RowMapper(ResultSet rs, int Rownum) ( implements RowMapper<T> )
+					rs 객체를 통해 DTO 객체에 담아, DTO return
+					
+			② JdbcDaoSupport 를 상속 받는 DAO 생성
+
+			③ MyBatis ( persistence framework - DB frameWork ) - JDBC 를 바탕으로 동작하며, 조금 더 편하게 작업 할 수 있음
+				( https://mybatis.org/mybatis-3/ko/index.html )
+				
+				Dependency 추가
+					MyBatis
+						<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+						<dependency>
+						    <groupId>org.mybatis</groupId>
+						    <artifactId>mybatis</artifactId>
+						    <version>3.5.9</version>
+						</dependency>
+						
+					MyBatis 와 SpringJdbc 연동 라이브러리
+						<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+						<dependency>
+						    <groupId>org.mybatis</groupId>
+						    <artifactId>mybatis-spring</artifactId>
+						    <version>2.0.7</version>
+						</dependency>
+					
+				> DAO Class 사용 X ( mapper / service )
+				> SqlSessionFactory 인스턴스 사용
+					=> Connection 정보 필요 (xml 설정으로 정보를 넘겨줄 수 있음) ( Connection : HikariCP에서 생성 )
+					
+				config.xml
+					<!-- mybatis interface annotation 활성화 -->
+					<mybatis-spring:scan base-package="com.study.mapper"/>
+					
+					<!-- mybatis SqlSessionFactory 인스턴스(객체) 생성 -->
+					<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+						<property name="dataSource" ref="ds" />
+					</bean>
+				
+				--Mapper
+					@Insert(SQL) 
+						바인딩(?) : #{val} 로 대체하여 처리
+					@Update(SQL)
+						:
+						:
+					
+				--ServiceImpl
+					--Mapper 객체를 생성하며, @Autowired 하여 config 에서 생성한 sqlSessionFactory 객체를 Injection	
+				
+					Exception
+						org.apache.ibatis.binding.BindingException: Parameter 'id' not found. Available parameters are [arg1, arg0, param1, param2]
+						§ --Mapper 클래스에서 binding 변수가 정상적으로 작동하지 않음
+						§ 1 개의 경우 정상적으로 작동 ( 변수와 바인딩변수가 명확하기 때문에 자동으로 매칭 )
+							@Insert(insert into Table values(${name1}, ${name2})
+						§ 2 개 이상의 경우, Parameter 의 이름을 명시해주어야 함 (@Param("name1") String val1, @Param("name2") String val2)
+						
+				--Mapper 의 SQL 문 XML 로 구분
+					생성	: Mybatis XML Mapper 생성
+					조건 	: Mapper 클래스의 경로를 resources 의 폴더에서 똑같이 생성
+						: Mapper 클래스의 파일 명 ( 대소문자 구분 ) 하여 동일하게 생성
+							>> 값들이 일치하지 않을 경우, 수동으로 Matching 해줘야 함 ( 때문에, 이름 및 폴더 경로를 일치 ) 
+							
+					XML 파일 : SQL 문이 길어질 경우, 작업이 어려울 수 있어, XML 파일로 따로 관리를 한다.
+						CRUD 의 태그 생성
+							> id = "Mapper 클래스의 메소드명과 일치"
+							> 세미콜론 사용 X
+							> 바인딩 변수는 #{val} 로 사용
+						
+							※ select 문의 경우 - 반환되는 값의 타입 (resultType) 설정 필요
+								select count(*) from Table ==> resultType="int"
+								select name from Table where col = ${val} ==> resultType="String"
+								select * from Table where col = ${val} ==> resultType="Path.--DTO"
+															:
+															:
+								Exception : org.mybatis.spring.MyBatisSystemException: 
+								nested exception is org.apache.ibatis.executor.ExecutorException: 
+								A query was run and no Result Maps were found for the Mapped Statement 
+								'com.study.mapper.BookMapper.select'.
+								It's likely that neither a Result Type nor a Result Map was specified.
+									>> result Type X
+								
+				mybatis 의 전신 : ibatis ( apache 제작 ==> google 팀으로 저작권 이전되며, mybatis 로 이름 변경 )
+		
+			④ ORM
+			
+		Spring Transaction 
+			config.xml
+				<!-- Spring Transaction Manager 등록 -->
+				<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+					<property name="dataSource" ref="ds" />
+				</bean>
+			
+				NameSpace : [ tx ] 추가
+				<tx:annotation-driven/> :: @Transactional Annotation 활성화
+			
+			--ServiceImpl
+				해당 메소드 Annotation
+					@Transactional :: 해당 메소드 내 Service 작업을 하나로 처리 ( 여러 작업 중 하나라도 Error 발생 시, rollback )
+					

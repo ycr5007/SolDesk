@@ -1,0 +1,182 @@
+Spring Framework
+	Core 기술 : DI, AOP...
+	Data Access : transaction, DAO support
+	Spring MVC : Core 기술 + Data Access
+	
+	
+	( Ref URL : https://shlee0882.tistory.com/206 ) 
+	( Ref URL : https://galid1.tistory.com/498 ) 
+	AOP ( Aspect Oriented Programming ) : 관점 지향 프로그래밍
+		> 어떤 로직을 기준으로 핵심적인 관점, 부가적인 관점으로 나누어서 보고 그 관점을 기준으로 각각 모듈화하겠다는 것
+			※ 모듈화 : 공통된 로직이나 기능을 하나로 묶음
+		> 어플리케이션 전반에 걸쳐 필요한 기능이지만, 핵심 비즈니스 로직과는 상관없는 기능
+		> 어플리케이션은 다양한 공통 기능을 필요로 함
+			ex) logging, transaction, security
+		> 핵심 로직을 구현한 코드에서 공통 기능을 직접적으로 호출하지 않음
+		> 핵심로직 구현 코드 안에 공통 기능입 삽입
+		
+		Lib ( version : 1.9.9.1 )
+			> Spring 내장 aspectJ 버전 수정
+			> aspectJ Weaver lib maven 적용
+		
+		Annotation
+			Advice : 공통적으로 메소드에 추가하고 싶은 기능
+				>> @Before("pointcut") : 메소드 실행 전
+				>> @After Returning("pointcut") : 메소드 정상 실행 완료된 후 ( 반환 된 후 )
+				>> @After Throwing("pointcut") : 메소드 Exception 발생 시
+				>> @After("pointcut") : After Returning + After Throwing ( 메소드 Exception 발생 여부를 따지지 않고, 종료 후 실행 )
+				>> @Around("pointcut") : 메소드 실행 전, 후
+				
+				Example ))
+					@Aspect
+					@Component("log")
+					public class LogAdvice {
+						
+						@Before(value="execution(* com.study.myapp.Product.getInfo())")
+						public void beforeLog() {
+							System.out.println("[AOP 공통로그] 비즈니스 로직 수행 전 호출 ( Before )");
+						}
+						
+						@After(value="execution(* com.study.myapp.Product.getInfo())")
+						public void afterLog() {
+							System.out.println("[AOP 공통로그] 비즈니스 로직 수행 후 호출 ( After )");
+						}
+					
+						@AfterReturning(value="execution(* com.study.myapp.Product.getInfo())")
+						public void afterReturnLog() {
+							System.out.println("[AOP 공통로그] 비즈니스 로직 정상 수행 후 호출 ( AfterReturning )");
+						}
+					
+						@AfterThrowing(value="execution(* com.study.myapp.Product.getInfo())")
+						public void afterThrowLog() {
+							System.out.println("[AOP 공통로그] 비즈니스 로직 중 Exception 발생 후 호출 ( AfterThrowing )");
+						}
+					
+						@Around(value="execution(* com.study.myapp.Product.getInfo())")
+						public void aroundLog(ProceedingJoinPoint pjp) {
+							/* Around 활용 시, 추가 코드 작성 필요 ( Around 에서 빠져나가는 작업 필요 ) */
+							/*
+								Aop proxy : AOP 실행 시, 메소드 요청을 인터셉트 하여 관리
+									ex ) before :: 	client
+													1 . Method 호출
+														Aop Proxy : 요청을 인터셉트 하여 관리
+													2 . before() advice 실행
+														Aop Proxy
+													3 . 요청한 메소드 실행
+								Around 의 경우, before 를 호출 한 후에, 다시 메소드를 실행한 후, 다시 돌아와야하기 때문에, 다음과 같은 추가 코드작성 필요 
+							*/
+							System.out.println("[AOP 공통로그] 비즈니스 로직 수행 ( 전 )·후 호출 ( Around )");
+							try {
+								pjp.proceed(); // 실제 클라이언트가 요청한 메소드 수행
+							} catch (Throwable e) {
+								e.printStackTrace();
+							}
+							System.out.println("[AOP 공통로그] 비즈니스 로직 수행 전·( 후 ) 호출 ( Around )");
+						}
+					}
+					
+				Result ))
+					[AOP 공통로그] 비즈니스 로직 수행 ( 전 )·후 호출 ( Around )
+					[AOP 공통로그] 비즈니스 로직 수행 전 호출 ( Before )
+					회사명 : XX
+					상품명 : XX
+					상품가 : XX
+					[AOP 공통로그] 비즈니스 로직 정상 수행 후 호출 ( AfterReturning )
+					[AOP 공통로그] 비즈니스 로직 수행 후 호출 ( After )
+					[AOP 공통로그] 비즈니스 로직 수행 전·( 후 ) 호출 ( Around )
+			
+			@Pointcut(execution(* Path.Class.Method())) : 작성한 클래스 안에 어떤 메소드에 적용할 것인지
+			
+			@Aspect : Pointcut 으로 지정한 메소드가 호출될 때 advice 가 삽입되는 설정
+				>> Aspect는 AOP의 기본 모듈이다.
+				>> Aspect = Advice + Pointcut
+				>> Aspect는 싱글톤 형태의 객체로 존재한다.
+				
+		Logging 
+			> 기록
+			> 시스템 상태 / 동작 정보
+			> 사용자 정보
+		
+			> 로그를 처리할 패키지나 방법들이 담겨있는 설정 파일 필요
+		
+			Log 처리를 위한 라이브러리
+				JCL (Jakarta Commons Logging) => 초기에 사용했던 Logging 방식
+					: facade ( ≒ Interface 와 유사, 기본 틀만 갖춤 )
+				Slf4j : JCL 의 단점을 보완
+					: facade ( ≒ Interface 와 유사, 기본 틀만 갖춤 )
+				
+				구현체
+					log4j => 최근 사용되고 있으나, 취약점이 발견되어 보안상 이슈가 있음 ( Spring Default )
+					logback => log4j 의 후속 버전 
+						<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+						<dependency>
+						    <groupId>ch.qos.logback</groupId>
+						    <artifactId>logback-classic</artifactId>
+						    <version>1.2.11</version>
+						</dependency>
+						
+						( URL https://logback.qos.ch/manual/configuration.html )
+						logback.xml 파일을 resource 폴더안에 저장하여, logback 설정
+							<configuration>
+							  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+							    <!-- encoders are assigned the type
+							         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+							    <encoder>
+							      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+							    </encoder>
+							  </appender>
+							
+							  <root level="debug">
+							    <appender-ref ref="STDOUT" />
+							  </root>
+							</configuration>
+							
+						Log 객체 호출
+							객체 생성
+								private static final Logger log = org.slf4j.LoggerFactory.getLogger(LogTest.class);
+							Lombok 사용
+								@Slf4j >> 변수 값 ( log )
+	
+	Spring WebMVC ( 가장 중요 ) ==> Model2
+		web.xml				: Tomcat 실행 시, 서버에서 web.xml 파일을 읽어들인다. (Spring Container, Filter ...)
+								>> root-context.xml 파일을 읽고, DispatcherServlet(환경설정 파일 : servlet-context.xml) 생성
+		servlet-context.xml	: @Controller 등록 ( servlet-context 에 작성되는 Bean 들은 servlet-container 에서만 사용된다 )
+		root-context.xml	: @Service / @Repository ... 일반 Bean 을 포함해 모두 root-context.xml 에서 생성한다 ( root-context.xml 에 등록되는 Bean 들은 모든 context에서 사용되어진다 ( 공유 가능 ))
+	
+			Spring	
+		DispatcherServlet(제공) ( Controller 역할 ) > HandlerMapping(제공) / HandlerAdapter(제공)		
+			..> --Controller 실행 ( Action 역할 ) >> < 서비스 (DB 작업) >
+				..> 응답 : InternalResourceViewResolver 동작 >> *.jsp 파일로 보여줌						
+			
+			
+		HandlerMapping ==> @RequestMapping( @GetMapping, @PostMapping, @DeleteMapping, @PutMapping )
+			@RequestMapping(path="Path", method=RequestMethod.[GET|POST])
+				>> @GetMapping("Path") | @PostMapping("Path") ( 단, @Controller 가 선언된 부분( Class 단 )에서는 RequestMapping 만 사용 가능하다 )
+				>> GET | POST 메소드가 같으며, Path 가 같은경우 고유성을 잃기 때문에 에러 발생 ( Method / Path 둘 중 하나가 다르면, 정상 작동 )
+				
+			Mapping 에서 Parameter 값을 가져오는 방법 ( GET 방식 : QueryString / POST 방식 )
+				① 변수명 사용 ( form 태그 name 값 = 매개변수 변수명 )
+				② ~DTO 객체 사용 ( form 태그 name 값 = DTO 객체 멤버 변수명 )
+				③ HttpServletRequest 객체 사용 ( request.getParameter ) : int 자동 형변환 X
+				
+				> int 형변환 없이 자동으로 처리 가능 ( int 형의 경우, 문자열 입력시 400 에러 발생 ) 
+				
+				Annotation
+					@RequestParam("name") : Parameter 로 사용된 변수의 이름과 전달되는 Parameter 의 이름이 다른 경우 사용 ( form name 과 변수명이 같으면 자동으로 매칭 )
+						> value = "form Tag name"
+						> required = [true|false]
+							true : 값이 없을 경우 400 Error 발생
+						> defaultValue = "default"
+					@ModelAttribute("name") : 바인딩 객체의 이름 설정
+											: Model 객체에 값을 담는 역할
+											
+				Model 객체 : 값 전달을 위한 객체 ( request.setAttribute() ) 
+					Model.addAttribute("name", value)
+					
+			Mapping Method 의 return 값(String)은 Client 에게 응답할 view 페이지를 입력한다 ( prefix : /WEB-INF/views/ | suffix : .jsp )
+				※ void 의 경우, 요청이 들어온 Mapping 으로 되돌린다.
+				
+			Mapping 기본 	: Forwarding 
+				redirect:Path	> sendRedirect 방식 ( 가야할 경로 입력 (GET 방식) : 다시 Controller Path 를 입력받아 이동 )
+				default			> forward 방식 ( 페이지 입력 )
+			

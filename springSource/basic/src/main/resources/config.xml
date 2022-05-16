@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- spring bean : 스프링에서 생성한 후 관리하는 객체 (SingleTon 관리) -->
+	<!-- 
+		bean : 
+			id : 호출 ID
+			class : 클래스 Path
+	-->
+	<bean id="en" class="com.study.myapp.di.MessageEn" />
+	<bean id="ko" class="com.study.myapp.di.MessageKo" />
+	
+	<bean id="sony" class="com.study.myapp.di.SonySpeaker" /> <!-- 객체를 생성하기 때문에, Default 생성자 실행 -->
+	<bean id="apple" class="com.study.myapp.di.AppleSpeaker" />
+	
+	<!-- <bean id="STV" class="com.study.myapp.di.SamsungTV" >
+		
+			constructor-arg : 생성자에 Injection ( new Class(args) )
+				ref : 매개변수 bean 의 id
+		
+		<constructor-arg ref="sony" />
+	</bean> -->
+	
+	<bean id="STV" class="com.study.myapp.di.SamsungTV">
+		<!-- 
+			property : Setter 를 통해 Injection ( class.setter(args) )
+ 				name : property 의 이름 (변수명)
+ 				ref : 매개변수 bean 의 id
+		-->
+		<property name="speaker" ref="apple" />
+	</bean>
+	
+	
+	<bean id="LTV" class="com.study.myapp.di.LGTV">
+		<constructor-arg ref="sony" />
+	</bean>
+</beans>
