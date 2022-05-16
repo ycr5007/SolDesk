@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.mapper.UserMapper">
+	<!-- 회원가입 -->
+	<insert id="register">
+		insert into sp_user(userid, email, password) values(#{userid}, #{email}, #{password})
+	</insert>
+	
+	<!-- 권한부여 -->
+	<insert id="registerAuth">
+		insert into sp_user_authority(userid, authority) values(#{userid}, #{authority})
+	</insert>
+	
+	<!-- 로그인 -->
+	<!-- 조인한 결과를 가져오는 방법 -->
+	<resultMap type="com.study.dto.SpUser" id="SpUser">
+		<id property="userid" column="userid" />
+		<result property="email" column="email" />
+		<result property="enabled" column="enabled" />
+		<result property="password" column="password" />
+		<collection property="authorities" resultMap="authList" />
+	</resultMap>
+	<!-- 조인 시 값이 여러개 나오는 경우, List 형태로 결과 주입 -->
+	<resultMap type="com.study.dto.SpUserAuthority" id="authList">
+		<result property="userid" column="userid" />
+		<result property="authority" column="authority" />
+	</resultMap>
+	<select id="read" resultMap="SpUser">
+		select use.userid, email, password, enabled, authority from sp_user use join sp_user_authority auth on use.userid = auth.userid where use.userid = #{userid}  
+	</select>
+	
+</mapper>
