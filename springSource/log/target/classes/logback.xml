@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	<appender> : 화면출력, 파일출력 ... 어떤 방식으로 출력을 할 것인지
+	name="STDOUT" : Standard Out (표준 출력)
+	
+	
+	Logging Level
+		1 ) error(빠른 확인 필요)
+		2 ) warn(빠른 확인 필요)
+		3 ) info(참고사항)
+		4 ) debug(개발 시)
+		5 ) trace(개발 시 - 모두 추적하기 때문에 확인이 어려울 수 있음)
+	
+ -->
+
+<!-- 일반 Console 출력 -->
+<!-- <configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="debug">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration> -->
+
+<configuration>
+	<!-- 파일로 기록 : Append 개념으로 기존 파일에 누적해서 기록한다. -->
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>myApp.log</file>
+		
+		<encoder>
+			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- 일반 Console -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="debug">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
