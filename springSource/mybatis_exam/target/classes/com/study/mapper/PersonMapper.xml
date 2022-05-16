@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.mapper.PersonMapper">
+	<!-- SQL 문 작성 : 세미콜론 X, 바인딩 변수는 #{val } 로 작성, id 값은 interface 의 메소드명과 일치 (대소문자 구분) -->
+	<insert id="insert">
+		insert into person(id, name) values(#{id}, #{name})
+	</insert>
+	<update id="update">
+		update person set name = #{name} where id = #{id}
+	</update>
+	<delete id="delete">
+		delete from person where id = #{id}
+	</delete>
+	<!-- Select 문의 경우 반환되는 값의 타입 (resultType) 설정 필요 -->
+		<!-- select count(*) from person ==> resultType="int" -->
+		<!-- select name from person where id = val ==> resultType="String" -->
+	<select id="select" resultType="com.study.dto.PersonDTO">
+		select * from person where id = #{id}
+	</select>
+	
+</mapper>
