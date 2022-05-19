@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>ThymeLeaf 예제</h1>
+	<h2>exlink</h2>
+	<ul>
+		<!-- ThymeLeaf 링크처리 : @{ [ 절대경로 | 상대경로 ] } -->
+		<li><a th:href="@{http://localhost:8081/sample/ex1}">ex1</a></li>
+		<li><a th:href="@{/sample/ex1}">ex1</a></li>
+		<li><a th:href="@{ex1}">ex1</a></li>
+		<!-- ex8?param1=aaa&param2=bbb -->
+		<li><a th:href="@{ex8(param1='aaa', param2='bbb')}">ex8</a></li>
+	</ul>
+</body>
+</html>

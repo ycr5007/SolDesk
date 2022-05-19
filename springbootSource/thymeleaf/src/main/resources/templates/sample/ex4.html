@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+	table{
+		border: 1px solid black;
+	}
+</style>
+<body>
+	<h1>ThymeLeaf 예제</h1>
+	<table>
+		<tr>
+			<th>INDEX</th>
+			<th>Size</th>
+			<th>odd/even</th>
+			<th>MNO</th>
+			<th>MID</th>
+			<th>MPW</th>
+			<th>MNAME</th>
+			<th>REGDATE</th>
+		</tr>
+		<!-- state : index, size 등 반복문 객체의 상세 정보를 가져온다 -->
+		<tr th:each="member,state : ${list }">
+			<td th:text="${state.index }"></td>
+			<td th:text="${state.size }"></td>
+			<td th:text="${state.odd + ' ' + state.even }"></td>
+			<td th:text="${member.mno }"></td>
+			<td th:text="${member.mid }"></td>
+			<td th:text="${member.mpw }"></td>
+			<td><a th:href="@{ex9(mno=${member.mno})}" th:text="${member.mname }"></a></td>
+			<td th:text="${#dates.format(member.regdate, 'yy-MM-dd hh:mm:ss') }"></td>
+		</tr>
+	</table>
+</body>
+</html>

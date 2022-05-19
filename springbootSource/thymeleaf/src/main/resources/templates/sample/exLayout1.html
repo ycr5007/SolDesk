@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<!-- 
+	레이아웃 처리 방법 ( header / footer )
+
+		th:insert
+			> 삽입한 태그안에 fragment 를 추가
+		th:replace
+			> 기존 태그를 fragment 로 대체
+ -->
+<body>
+	<!-- Header Fragment 포함 : ~{/경로/파일명::fragment이름 } -->
+	<div th:insert="~{/fragments/header::header}"></div>
+	
+	<h1> Content </h1>
+
+	<!-- Footer Fragment 포함 : ~{/경로/파일명::fragment이름 } -->
+	<div th:replace="~{/fragments/footer::footer}"></div>
+</body>
+</html>
