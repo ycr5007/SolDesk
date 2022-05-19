@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
+		<th:block th:fragment="content">
+			<h1 class="mt-4">GuestBook No.[[${dto.gno}]] Modify Page</h1>
+			<form th:action="@{/guestbook/modify}" th:method="post">
+				<input type="hidden" name="gno" id="gno" class="form-control" th:value="${dto.gno}" />
+				<div class="mb-3">
+					<label for="title">Title</label>
+					<input type="text" name="title" id="title" class="form-control" th:value="${dto.title}" />
+				</div>
+				<div class="mb-3">
+					<label for="content">Content</label>
+					<textarea name="content" id="content" class="form-control" rows="4" style="resize: none;" >[[${dto.content}]]</textarea>
+				</div>
+				<div class="mb-3">
+					<label for="writer">Writer</label>
+					<input type="text" name="writer" id="writer" class="form-control" th:value="${dto.writer}" readonly />
+				</div>
+				<div class="mb-3">
+					<label for="regdate">Reg Date</label>
+					<input type="text" id="regdate" class="form-control" th:value="${#temporals.format(dto.regdate, 'yy/MM/dd')}" readonly />
+				</div>
+				<div class="mb-3">
+					<label for="updatedate">Update Date</label>
+					<input type="text" id="updatedate" class="form-control" th:value="${#temporals.format(dto.updatedate, 'yy/MM/dd')}" readonly />
+				</div>
+				<button type="button" class="btn btn-primary">Modify</button>
+				<button type="button" class="btn btn-danger">Remove</button>
+				<button type="button" class="btn btn-info">List</button>
+				<input type="hidden" name="page" th:value="${page.page}" />
+				<input type="hidden" name="type" th:value="${page.type}" />
+				<input type="hidden" name="keyword" th:value="${page.keyword}" />
+			</form>
+			<script th:inline="javascript">
+				
+			let form = $("form")
+			
+				$(function(){
+					$(".btn-danger").click(function(){
+						form.attr("action", "/guestbook/remove")
+							.attr("method", "post")
+							.submit();
+					})
+					
+					$(".btn-primary").click(function(){
+						
+						if(!confirm("수정 ㄱ ?")){
+							return;
+						}
+						
+						form.attr("action", "/guestbook/modify")
+							.attr("method", "post")
+							.submit();
+					})
+					
+					$(".btn-info").click(function(){
+						// 페치지 정보 가져오기						
+						let page = $("[name='page']");
+						let type = $("[name='type']");
+						let keyword = $("[name='keyword']");
+						
+						// Form 내부 데이터 삭제
+						form.empty();
+						
+						// 페이지 나누기 정보 전달
+						form.append(page);
+						form.append(type);
+						form.append(keyword);
+						
+						form.attr("action", "/guestbook/list")
+							.attr("method", "get")
+							.submit();
+					})
+				})
+			</script>
+		</th:block>
+	</th:block>
+
+</html>
