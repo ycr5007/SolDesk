@@ -1,0 +1,10 @@
+# Escape 문자 ( \ 로 시작하는 문자 )
+
+print("Hi \t Hello")
+print("Hi \n Hello")
+print("Hi \\ Hello")
+print()
+print("Python's favorite food is perl")
+print('Python\'s favorite food is perl')
+print('"Python" is favorite food is perl')
+print('\"Python\" is favorite food is perl')
