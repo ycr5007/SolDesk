@@ -21,18 +21,29 @@ def sumN3(val):
     return val * (val + 1) // 2
 
 
+# 재귀함수 호출
+def sumN4(val):
+    if val == 1:
+        return 1
+    else:
+        return val + sumN4(val - 1)
+
+
 if __name__ == "__main__":
     import time
 
     start = time.time()
-    print(sumN1(100000000))
+    print(sumN1(100))
     end = time.time()
     print(end - start)
     start = time.time()
-    print(sumN2(100000000))
+    print(sumN2(100))
     end = time.time()
     print(end - start)
     start = time.time()
-    print(sumN3(100000000))
+    print(sumN3(100))
+    end = time.time()
+    print(end - start)
+    print(sumN4(100))
     end = time.time()
     print(end - start)
