@@ -1,0 +1,10 @@
+RPA ( Robotic Process Automation )
+
+- 웹, 윈도우, 어플리케이션( 엑셀 ... ) 등을 사전에 설정한 시나리오에 따라 자동적으로 작동하여 수작업을 최소화하는 일련의 프로세스
+- RPA 상용 소프트웨어
+	- Unipath, BluePrism, Automation Anywhere, WinAutomation
+- RPA 라이브러리
+	- pyautogui, pyperclip, selenium
+
+엑셀 라이브러리 - openpyxl, pandas
+    openpyxl : pip install openpyxl
