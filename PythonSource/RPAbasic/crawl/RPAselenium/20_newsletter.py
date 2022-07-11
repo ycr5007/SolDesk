@@ -150,7 +150,7 @@ browser.find_element(
 time.sleep(1)
 
 # 전송버튼 클릭
-browser.find_element(
+browser.find_element( 
     By.XPATH, '//*[@id="composer"]/div/div[1]/div[2]/div/div/button[1]'
 ).click()
 time.sleep(2)
