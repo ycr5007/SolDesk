@@ -1,0 +1,70 @@
+Jango 가상환경 설정
+	CMD 경로 지정 후, 가상환경 설치
+	cmd 명령어
+		venv(Jango 가상환경 설치폴더) : python -m venv venv
+
+		! ) venv 내 설치의 경우 안될수 있음 ( venv/scripts => activate : 가상환경 내에서 pip 인스톨 진행 )
+		pip Version Upgrade(가상환경 venv 폴더) : python -m pip install --upgrade pip
+		DJango 라이브러리 설치(가상환경 venv 폴더) : pip install django
+
+		DJango 프로젝트 생성(프로젝트(myPhoto) 폴더) : django-admin startproject config .
+			> 폴더명(config) : 폴더 생성
+			> 경로( . ) : 생성할 폴더의 경로
+
+	터미널 명령어
+		서버 실행 (프로젝트 폴더) : python manage.py runserver
+			==> URL : http://127.0.0.1:8000/
+			서버 종료 : Ctrl Break ( Ctrl + C )
+        앱 생성 : python manage.py startapp photo
+		데이터베이스 변경사항 파일생성 : python manage.py makemigrations
+		데이터베이스 변경사항 적용(migrations 파일 읽어옴) : python manage.py migrate
+		Admin 계정 생성 : python manage.py createsuperuser
+		
+		Jango Shell : 데이터베이스 CRUD 명령어를 실행
+			Shell : python manage.py shell
+				객체 Import : from photo.models import ModelName
+				
+			조회 방법 
+				조회 명령어 :	model_var = modelName.objects.all()
+								model_var = modelName.objects.get(pk=n)
+								model_var = modelName.objects.filter(pk=n)
+								model_var = modelName.objects.filter(col__contains='data')
+				RESULT >> <QuerySet [<Photo: Photo object (1)>, <Photo: Photo object (2)>, <Photo: Photo object (3)>, <Photo: Photo object (4)>]>
+			수정 방법
+				model_var.col = 'data'
+				model_var.save() >> 실제 데이터 저장 ( Update - DB 반영 )
+			삭제 방법
+				model_var.delete() >> RESULT : (1, {'photo.Photo': 1}) ( Delete - DB 반영 )
+
+			Shell 탈출 : quit()
+
+
+	프로젝트 내부 파일
+		config : DJango 환경설정 파일 (myPhoto 프로젝트의 환경설정 파일)
+			settings.py : DB / Language / Time 등 설정
+			urls.py : url 경로 지정
+		db.sqlite3 : DJango 프로잭트는 데이터베이스 sqlite 로 설정되어 있음 ( 변경 가능 )
+		manage.py : config/settings.py 의 설정을 불러와 서버 실행
+
+
+DJango( FrameWork )
+	Database
+		DJango : ORM 방식 ( SpringBoot 와 유사함 )
+
+		ORM 방식 :: Object Relational Mapping, 객체-관계 매핑
+			- 객체와 관계형 데이터베이스의 데이터를 자동으로 매핑(연결)해주는 것을 말한다.
+			- 객체 지향 프로그래밍은 클래스를 사용하고, 관계형 데이터베이스는 테이블을 사용한다.
+			- 객체 모델과 관계형 모델 간에 불일치가 존재한다.
+			- ORM을 통해 객체 간의 관계를 바탕으로 SQL을 자동으로 생성하여 불일치를 해결한다.
+			- 데이터베이스 데이터 <—매핑—> Object 필드
+			- 객체를 통해 간접적으로 데이터베이스 데이터를 다룬다.
+	
+	HTML + Jango Code
+	MODEL 방식
+
+
+Run
+    reqeuest ==> 
+    urls.py(config) ==> : url 요청 분배 가능( config 가 아닌 별도의 폴더에 urls 파일 생성 후, config/urls.py 에서 특정 앱 지정 )
+    (Application urls.py ==>)
+    views.py : 실제 사용자에게 보여줄 페이지 지정
