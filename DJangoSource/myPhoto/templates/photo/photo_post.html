@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1><a href="">홈으로 돌아가기</a></h1>
+    <section>
+      <h2>New Photo</h2>
+      <form action="" method="post">
+        <!-- DJango 에서 제공하는 Form -->
+        {{ form.as_p }}
+        <!-- POST 전송 시 CSRF 토큰 전송 필수 -->
+        {% csrf_token %}
+        <button type="submit">완료</button>
+      </form>
+    </section>
+  </body>
+</html>
