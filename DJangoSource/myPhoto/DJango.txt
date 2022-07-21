@@ -68,3 +68,26 @@ Run
     urls.py(config) ==> : url 요청 분배 가능( config 가 아닌 별도의 폴더에 urls 파일 생성 후, config/urls.py 에서 특정 앱 지정 )
     (Application urls.py ==>)
     views.py : 실제 사용자에게 보여줄 페이지 지정
+
+
+==============================================================================================================================
+사전작업
+
+	Settings 설정
+
+		LANGUAGE_CODE : ko-kr
+		TIME_ZONE : Asia/Seoul
+		INSTALLED_APPS : Application 등록
+		TEMPLATES : Template 등록
+			DIRS : [BASE_DIR/"templates"]
+
+	urls / views 생성 및 연결
+		config/urls.py 수정
+		App/urls.py 생성
+
+	App 에서 사용할 Template 폴더(templates) 생성 및 관리
+		└ 모든 앱에서 공통으로 사용할 Template 파일
+		└ 특정 앱에서 사용할 Template 파일 (폴더로 분리)
+
+	App 에서 사용할 모델 생성 ( 테이블 생성과 유사 개념 )	
+		Admin App 에서 사용자가 생성한 App 의 Model 관리할 수 있도록 추가 => admin.py 수정 ( admin.site.register(AppName) )

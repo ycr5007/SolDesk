@@ -24,5 +24,6 @@ urlpatterns = [
     # 게시물 상세 ( 각각의 PK 값으로 세부 페이지 )
     path("new/", views.photo_post, name="photo_post"),  # 새 글 작성
     path("<int:pk>/edit/", views.photo_edit, name="photo_edit"),  # 글 수정
+    path("<int:pk>/remove/", views.photo_remove, name="photo_remove"),  # 글 수정
 ]
 # <type:name>/ : type 과 매개변수로 쿼리스트링에 담을 name 값에 해당 type 을 지정해 받아온다

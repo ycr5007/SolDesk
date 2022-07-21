@@ -1,0 +1,9 @@
+WEB 개발 시 데이터 관리
+
+1 ) Query 작성 통해 DB 접근
+    MyBatis, DAO ...
+
+2 ) ORModel : Model 을 거쳐 DB 접근
+    DJango, JPA ... 
+
+    model.save() 실행 : DB 에 저장

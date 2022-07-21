@@ -33,8 +33,8 @@ def photo_post(request):
     if request.method == "POST":  # POST
         form = PhotoForm(request.POST)
         if form.is_valid():
-            photo = form.save(commit=False)  
-            photo.save() # DB Insert 작업
+            photo = form.save(commit=False)
+            photo.save()  # DB Insert 작업
             # redirect("URL Name") : URL Name 이 일치하는 주소로 Redirect
             return redirect("photo_detail", pk=photo.pk)
     else:  # GET
@@ -51,8 +51,17 @@ def photo_edit(request, pk):
         form = PhotoForm(request.POST, instance=photo)
         if form.is_valid():
             photo = form.save(commit=False)
-            photo.save() # DB 내에 값이 있기 때문에, 값에 대해 DB Update 작업
+            photo.save()  # DB 내에 값이 있기 때문에, 값에 대해 DB Update 작업
             return redirect("photo_detail", pk=photo.pk)
     else:
         form = PhotoForm(instance=photo)
     return render(request, "photo/photo_post.html", {"form": form})
+
+
+def photo_remove(request, pk):
+    # pk 에 해당하는 데이터 찾기
+    photo = get_object_or_404(Photo, pk=pk)
+    # 삭제
+    photo.delete()
+    # DB 작업 후 이동할 경로
+    return redirect("photo_list")
