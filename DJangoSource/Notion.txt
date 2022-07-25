@@ -1,0 +1,58 @@
+조회
+
+Models.objects.all()
+Models.objects.get(col=data) : col = data
+Models.objects.filter(col=data) : col = data
+Models.objects.filter(col__contains='data') : like '%data%'
+Models.objects.order_by('col') : ASC
+Models.objects.order_by('-col') : DESC
+
+q.childModels_set.all() : 외래키 제약조건이 걸린 row 값
+	ex ) q = Question.objects.get(id=1)
+		q.answer_set.all()
+
+수정 과정
+
+- 1개의 데이터 조회한 결과를 변수에 담아 저장
+- 변수에 저장된 row 의 컬럼명으로 직접 접근하여 수정
+	ex ) q.subject = 'DJango'
+- q.save()
+
+삽입 과정
+
+- 변수에 Model 객체의 값을 담아 저장
+	ex ) a = Answer(question=q( Question - 외래키 ), content='어드민은 슈퍼유저로 접근이 불가합니다', create_date=timezone.now())
+- a.save()
+
+Template
+	- App 폴더 아래에 있는 templates 폴더는 자동인식
+
+
+프로젝트 폴더
+	└ board
+		└ templates => *.html
+	└ member
+	└ todo
+	     :
+	     :
+
+
+# 테이블 수정
+python manage.py makemigrations 실행 시 선택 Option
+
+It is impossible to add a non-nullable field 'author' to question without specifying a default. This is because the database needs something to populate existing rows.
+Please select a fix:
+ 1) Provide a one-off default now (will be set on all existing rows with a null value for this column)
+	> 기존 데이터의 새 컬럼에 대한 값을 Null Value 로 채움
+ 2) Quit and manually define a default value in models.py.
+
+
+권한 및 회원에 관한 정보, auth_* 테이블
+
+  	request.user : 현재 로그인 되어있는 User 객체의 정보
+		is_authenticated : 현재 로그인되어 있는 객체를 의미
+
+
+	auth_user : 유저정보 저장 테이블
+		username, password, is_superuser, first_name, last_name, email, last_login, date_joined, is_staff, is_active
+			! ) password 자동 암호화

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+<!-- 블록-->
+{% block content %}
+<div class="container my-3">
+  <div class="container col-6">
+    <div class="card">
+      <div class="card-body my-3">
+        <h2>Login</h2>
+        <hr />
+        <form action="" method="post" class="post-form">
+          {% csrf_token %} {% include 'form_errors.html' %}
+          <div class="form-group">
+            <label for="username"><b>User ID</b></label>
+            <input type="text" name="username" id="username" class="form-control" value="{{ form.username.value | default_if_none:''}}" />
+          </div>
+          <div class="form-group">
+            <label for="password"><b>Password</b></label>
+            <input type="password" name="password" id="password" class="form-control" value="{{ form.password.value | default_if_none:''}}" />
+          </div>
+          <div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <span class="text-right"> 또는 <a href="{% url 'common:signup' %}"> 계정을 만드세요</a> </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

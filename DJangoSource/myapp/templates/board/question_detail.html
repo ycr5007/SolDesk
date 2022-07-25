@@ -1,0 +1,88 @@
+<!-- base HTML 코드를 불러옴 -->
+{% extends 'base.html' %}
+<!-- base.html 에서 지정한 block -->
+{% block content %}
+
+<div class="container my-3">
+  <h1>Question Detail</h1>
+  <hr />
+  <h2 class="border-bottom py-2">{{question.subject}}</h2>
+  <div class="card my-3">
+    <div class="card-body">
+      <div class="card-text" style="white-space: pre-line">{{question.content}}</div>
+      <div class="d-flex justify-content-end">
+        <div class="badge badge-light p-2 text-left">
+          <div class="mb-2">{{question.author.username}}</div>
+          {{question.create_date}}
+        </div>
+      </div>
+      <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'board:index' %}">ToList</a>
+      {% if question.author == request.user %}
+      <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'board:question_modify' question_id=question.id %}">Modify</a>
+      <a type="button" class="delete btn btn-sm btn-outline-secondary" href="#" data-uri="{% url 'board:question_delete' question_id=question.id %}">Delete</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <h5 class="border-bottom my-3 py-2">
+    <!-- 답변 개수 -->
+    {{question.answer_set.count}} 개 답변
+  </h5>
+  <div class="col-12">
+    {% for answer in question.answer_set.all %}
+    <div class="card my-3">
+      <div class="card-body">
+        <div class="card-text" style="white-space: pre-line">{{ answer.content }}</div>
+        <div class="d-flex justify-content-end">
+          <div class="badge badge-light p-2 text-left">
+            <div class="mb-2">{{ answer.author.username }}</div>
+            {{ answer.create_date }}
+          </div>
+        </div>
+        {% if answer.author == request.user %}
+        <div class="my-3">
+          <a href="{% url 'board:answer_modify' answer_id=answer.id %}" class="btn btn-sm btn-outline-secondary">Modify</a>
+          <a href="#" class="btn btn-sm btn-outline-secondary">Delete</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="col-12">
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+      {% for field in form %} {% if field.errors %}
+      <strong>{{field.label}}</strong>
+      {{field.errors}} {% endif %} {% endfor %}
+    </div>
+    {% endif %}
+    <form action="{% url 'board:answer_create' question_id=question.id %}" method="post" class="my-3">
+      <div class="form-group">
+        <textarea name="content" id="content" rows="10" class="form-control" style="resize: none" {% if not user.is_authenticated %}disabled{% endif %}></textarea>
+        {% csrf_token %}
+      </div>
+      <input type="submit" value="답변 등록" class="btn btn-primary" />
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+<!-- Script 작성 블럭 -->
+{% block script %}
+<script>
+  $(function () {
+    $(".delete").click(function (e) {
+      e.preventDefault();
+
+      uri = $(this).data("uri");
+
+      if (confirm("정말로 삭제하시겠습니까 ?")) {
+        location.href = uri;
+      } else {
+        return;
+      }
+    });
+  });
+</script>
+{% endblock %}

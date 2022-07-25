@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+  </head>
+  <body>
+    <!-- navBar -->
+    {% include "navbar.html" %}
+    <!-- 기본 템플릿 안에 삽입 시작 -->
+    {% block content %}
+    <!-- 각 페이지마다 다른 내용 작성 -->
+    {% endblock %}
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block script %}
+    <!-- 각 페이지마다 작성하는 Script 블럭 -->
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+<!-- 블록 지정 -->
+{% block content %}
+<div class="container my-3">
+  <div class="card">
+    <div class="card-body my-3">
+      <div class="row my-3">
+        <div class="col-4">
+          <h2>Sign Up</h2>
+          <hr />
+        </div>
+      </div>
+      <form action="" method="post" class="post-form">
+        {% csrf_token %}
+        <!-- 유효성 검사 및 에러 출력 html-->
+        {% include 'form_errors.html' %}
+        <div class="form-group">
+          <label for="username"><b>User ID</b></label>
+          <input type="text" name="username" id="username" class="form-control" value="{{ form.username.value | default_if_none:''}}" />
+        </div>
+        <div class="form-group">
+          <label for="password1"><b>Password</b></label>
+          <input type="password" name="password1" id="password1" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="password2"><b>Password Check</b></label>
+          <input type="password" name="password2" id="password2" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label for="email"><b>E-Mail</b></label>
+          <input type="text" name="email" id="email" class="form-control" value="{{ form.email.value | default_if_none:''}}" />
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary">SignUp</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
