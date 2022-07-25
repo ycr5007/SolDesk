@@ -15,5 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from board import views as board_views
 
-urlpatterns = [path("admin/", admin.site.urls), path("board/", include("board.urls"))]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("board/", include("board.urls")),
+    path("common/", include("common.urls")),
+    # http://127.0.0.1:8000/
+    path("", board_views.index, name="index"),
+]
