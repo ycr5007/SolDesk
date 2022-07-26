@@ -1,4 +1,4 @@
-from .models import Question, Answer
+from .models import Question, Answer, Comment
 from django import forms
 
 # Model Form - 모델과 연결
@@ -21,3 +21,12 @@ class AnswerForm(forms.ModelForm):
 
         # Error 메세지 label 명 변경
         labels = {"content": "답변 내용"}
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["content"]
+
+        # Error 메세지 label 명 변경
+        labels = {"content": "댓글 내용"}
