@@ -1,108 +1,142 @@
 <!-- base HTML 코드를 불러옴 -->
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load board_filter %}
 <!-- base.html 에서 지정한 block -->
 {% block content %}
 
 <div class="container my-3">
+  <!-- 오류표시 -->
+  {% if messages %}
+  <div class="alert alert-danger my-3" role="alert">
+    {% for message in messages %}
+    <strong>{{ message.tags }}</strong>
+    <ul>
+      <li>{{ message.message }}</li>
+    </ul>
+    {% endfor %}
+  </div>
+  {% endif %}
   <h1>Question Detail</h1>
   <hr />
   <h2 class="border-bottom py-2">{{question.subject}}</h2>
-  <div class="card my-3">
-    <div class="card-body">
-      <div class="card-text" style="white-space: pre-line">{{question.content}}</div>
-      <div class="d-flex justify-content-end">
-        <div class="badge badge-light p-2 text-left">
-          <div class="mb-2">{{question.author.username}}</div>
-          {{question.create_date}}
+  <div class="row my-3">
+    <!-- 추천 영역 -->
+    <div class="col-1 align-self-center">
+      <div class="bg-light text-center p-3 border font-weight-bolder mb-1">{{ question.voter.count }}</div>
+      <a href="#" data-uri="{% url 'board:vote_question' question_id=question.id %}" class="recommend btn btn-sm btn-secondary btn-block my-1">추천</a>
+    </div>
+    <!-- 추천 역역 종료 -->
+
+    <div class="col-11">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-text">{{question.content|mark}}</div>
+          <div class="d-flex justify-content-end">
+            <div class="badge badge-light p-2 text-left">
+              <div class="mb-2">{{question.author.username}}</div>
+              {{question.create_date}}
+            </div>
+          </div>
+          {% if question.modify_date %}
+          <div class="d-flex justify-content-end">
+            <div class="badge badge-light p-2 text-left">
+              <div class="mb-2">modified at</div>
+              <!-- 질문 수정 날짜 -->
+              {{question.modify_date}}
+            </div>
+          </div>
+          {% endif %}
+          <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'board:index' %}">ToList</a>
+          {% if question.author == request.user %}
+          <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'board:question_modify' question_id=question.id %}">Modify</a>
+          <a type="button" class="delete btn btn-sm btn-outline-secondary" href="#" data-uri="{% url 'board:question_delete' question_id=question.id %}">Delete</a>
+          {% endif %}
+          <!-- 질문 댓글 영역 START -->
+          <div class="mt-3">
+            {% if question.comment_set.count > 0 %}
+            <!-- 댓글 반복문 -->
+            {% for comment in question.comment_set.all %}
+            <!-- 질문 댓글 앵커 부분 -->
+            <a name="question_comment_{{comment.id}}"></a>
+            <div class="comment py-2 text-muted">
+              <span style="white-space: pre-line">{{ comment.content }}</span>
+              <span class="comment"> - <b>{{ comment.author.username }}</b>, {{ comment.create_date }} {% if comment.modify_date %} (수정 : {{ comment.modify_date }} ) {% endif %} </span>
+              {% if request.user == comment.author %}
+              <a href="{% url 'board:comment_modify_question' comment_id=comment.id %}" class="small">수정</a>
+              <a href="#" data-uri="{% url 'board:comment_delete_question' comment_id=comment.id %}" class="small delete">삭제</a>
+              {% endif %}
+            </div>
+            {% endfor %} {% endif %}
+          </div>
+          <div>
+            <a href="{% url 'board:comment_create_question' question_id=question.id %}" class="small">댓글 추가...</a>
+          </div>
+          <!-- 질문 댓글 영역 END -->
         </div>
       </div>
-      {% if question.modify_date %}
-      <div class="d-flex justify-content-end">
-        <div class="badge badge-light p-2 text-left">
-          <div class="mb-2">modified at</div>
-          <!-- 질문 수정 날짜 -->
-          {{question.modify_date}}
-        </div>
-      </div>
-      {% endif %}
-      <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'board:index' %}">ToList</a>
-      {% if question.author == request.user %}
-      <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'board:question_modify' question_id=question.id %}">Modify</a>
-      <a type="button" class="delete btn btn-sm btn-outline-secondary" href="#" data-uri="{% url 'board:question_delete' question_id=question.id %}">Delete</a>
-      {% endif %}
-      <!-- 질문 댓글 영역 START -->
-      <div class="mt-3">
-        {% if question.comment_set.count > 0 %}
-        <!-- 댓글 반복문 -->
-        {% for comment in question.comment_set.all %}
-        <!-- 질문 댓글 앵커 부분 -->
-        <a name=""></a>
-        <div class="comment py-2 text-muted">
-          <span style="white-space: pre-line">{{ comment.content }}</span>
-          <span class="comment"> - <b>{{ comment.author.username }}</b>, {{ comment.create_date }} {% if comment.modify_date %} (수정 : {{ comment.modify_date }} ) {% endif %} </span>
-          <a href="{% url 'board:comment_modify_question' comment_id=comment.id %}" class="small">수정</a>
-          <a href="#" data-uri="{% url 'board:comment_delete_question' comment_id=comment.id %}" class="small delete">삭제</a>
-        </div>
-        {% endfor %} {% endif %}
-      </div>
-      <div>
-        <a href="{% url 'board:comment_create_question' question_id=question.id %}" class="small">댓글 추가...</a>
-      </div>
-      <!-- 질문 댓글 영역 END -->
     </div>
   </div>
-
   <h5 class="border-bottom my-3 py-2">
     <!-- 답변 개수 -->
     {{question.answer_set.count}} 개 답변
   </h5>
-  <div class="col-12">
-    {% for answer in question.answer_set.all %}
-    <div class="card my-3">
-      <div class="card-body">
-        <div class="card-text" style="white-space: pre-line">{{ answer.content }}</div>
-        <div class="d-flex justify-content-end">
-          <div class="badge badge-light p-2 text-left">
-            <div class="mb-2">{{ answer.author.username }}</div>
-            {{ answer.create_date }}
+  {% for answer in question.answer_set.all %}
+  <a name="answer_{{answer.id}}"></a>
+  <div class="row my-3">
+    <!-- 추천 영역 -->
+    <div class="col-1 align-self-center">
+      <div class="bg-light text-center p-3 border font-weight-bolder mb-1">{{ answer.voter.count }}</div>
+      <a href="#" data-uri="{% url 'board:vote_answer' answer_id=answer.id %}" class="recommend btn btn-sm btn-info btn-block my-1">추천</a>
+    </div>
+    <!-- 추천 역역 종료 -->
+    <div class="col-11">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-text">{{ answer.content|mark }}</div>
+          <div class="d-flex justify-content-end">
+            <div class="badge badge-light p-2 text-left">
+              <div class="mb-2">{{ answer.author.username }}</div>
+              {{ answer.create_date }}
+            </div>
           </div>
-        </div>
-        {% if answer.modify_date %}
-        <div class="d-flex justify-content-end">
-          <div class="badge badge-light p-2 text-left">
-            <div class="mb-2">modified at</div>
-            {{ answer.modify_date }}
+          {% if answer.modify_date %}
+          <div class="d-flex justify-content-end">
+            <div class="badge badge-light p-2 text-left">
+              <div class="mb-2">modified at</div>
+              {{ answer.modify_date }}
+            </div>
           </div>
-        </div>
-        {% endif %} {% if answer.author == request.user %}
-        <div class="my-3">
-          <a href="{% url 'board:answer_modify' answer_id=answer.id %}" class="btn btn-sm btn-outline-secondary">Modify</a>
-          <a href="#" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'board:answer_delete' answer_id=answer.id %}">Delete</a>
-        </div>
-        {% endif %}
-        <!-- 질문 댓글 영역 START -->
-        <div class="mt-3">
-          {% if answer.comment_set.count > 0 %}
-          <!-- 댓글 반복문 -->
-          {% for comment in answer.comment_set.all %}
-          <!-- 질문 댓글 앵커 부분 -->
-          <a name=""></a>
-          <div class="comment py-2 text-muted">
-            <span style="white-space: pre-line">{{ comment.content }}</span>
-            <span class="comment"> - <b>{{ comment.author.username }}</b>, {{ comment.create_date }} {% if comment.modify_date %} (수정 : {{ comment.modify_date }} ) {% endif %} </span>
-            <a href="{% url 'board:comment_modify_answer' comment_id=comment.id %}" class="small">수정</a>
-            <a href="#" data-uri="{% url 'board:comment_delete_answer' comment_id=comment.id %}" class="small delete">삭제</a>
+          {% endif %} {% if answer.author == request.user %}
+          <div class="my-3">
+            <a href="{% url 'board:answer_modify' answer_id=answer.id %}" class="btn btn-sm btn-outline-secondary">Modify</a>
+            <a href="#" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'board:answer_delete' answer_id=answer.id %}">Delete</a>
           </div>
-          {% endfor %} {% endif %}
+          {% endif %}
+          <!-- 질문 댓글 영역 START -->
+          <div class="mt-3">
+            {% if answer.comment_set.count > 0 %}
+            <!-- 댓글 반복문 -->
+            {% for comment in answer.comment_set.all %}
+            <!-- 질문 댓글 앵커 부분 -->
+            <a name="answer_comment_{{comment.id}}"></a>
+            <div class="comment py-2 text-muted">
+              <span style="white-space: pre-line">{{ comment.content }}</span>
+              <span class="comment"> - <b>{{ comment.author.username }}</b>, {{ comment.create_date }} {% if comment.modify_date %} (수정 : {{ comment.modify_date }} ) {% endif %} </span>
+              {% if request.user == comment.author %}
+              <a href="{% url 'board:comment_modify_answer' comment_id=comment.id %}" class="small">수정</a>
+              <a href="#" data-uri="{% url 'board:comment_delete_answer' comment_id=comment.id %}" class="small delete">삭제</a>
+              {% endif %}
+            </div>
+            {% endfor %} {% endif %}
+          </div>
+          <div>
+            <a href="{% url 'board:comment_create_answer' answer_id=answer.id %}" class="small">답변 댓글 추가...</a>
+          </div>
+          <!-- 질문 댓글 영역 END -->
         </div>
-        <div>
-          <a href="{% url 'board:comment_create_answer' answer_id=answer.id %}" class="small">답변 댓글 추가...</a>
-        </div>
-        <!-- 질문 댓글 영역 END -->
       </div>
     </div>
-    {% endfor %}
   </div>
+  {% endfor %}
   <div class="col-12">
     {% if form.errors %}
     <div class="alert alert-danger" role="alert">
@@ -122,6 +156,10 @@
 </div>
 
 {% endblock %}
+<form action="" id="searchForm" method="get">
+  <input type="hidden" name="keyword" id="keyword" value="{{keyword|default_if_none:''}}" />
+  <input type="hidden" name="page" id="page" value="{{page}}" />
+</form>
 <!-- Script 작성 블럭 -->
 {% block script %}
 <script>
@@ -132,6 +170,17 @@
       uri = $(this).data("uri");
 
       if (confirm("정말로 삭제하시겠습니까 ?")) {
+        location.href = uri;
+      } else {
+        return;
+      }
+    });
+
+    $(".recommend").click(function (e) {
+      e.preventDefault();
+
+      uri = $(this).data("uri");
+      if (confirm("추천하시겠습니까 ?")) {
         location.href = uri;
       } else {
         return;

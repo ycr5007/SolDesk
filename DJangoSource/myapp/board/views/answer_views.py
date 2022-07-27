@@ -1,4 +1,5 @@
-from django.shortcuts import get_object_or_404, redirect, render
+from tkinter import ANCHOR
+from django.shortcuts import get_object_or_404, redirect, render, resolve_url
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.contrib import messages
@@ -21,7 +22,16 @@ def answer_create(request, question_id):
             # 현재 로그인 사용자 ( 작성자 ) : request.user
             answer.author_id = request.user.id
             answer.save()
-            return redirect("board:detail", question_id=q.id)
+            # return redirect("board:detail", question_id=q.id)
+
+            # http://127.0.0.1:8000/board/305#answer_14
+            # anchor 적용 : detail 에서 특정 영역 보여주기
+            # resolve_url() : 실제 호출되는 URL 을 문자열로 반환
+            return redirect(
+                "{}#answer_{}".format(
+                    resolve_url("board:detail", question_id=q.id), answer.id
+                )
+            )
     else:
         form = AnswerForm()
     context = {"question": q, "form": form}
@@ -48,7 +58,13 @@ def answer_modify(request, answer_id):
             answer_form = form.save(commit=False)
             answer_form.modify_date = timezone.now()
             answer_form.save()
-            return redirect("board:detail", question_id=answer.question.id)
+            # return redirect("board:detail", question_id=answer.question.id)
+
+            return redirect(
+                "{}#answer_{}".format(
+                    resolve_url("board:detail", question_id=answer.question.id), answer.id
+                )
+            )
     else:
         form = AnswerForm(instance=answer)
     return render(request, "board/answer_form.html", {"form": form})

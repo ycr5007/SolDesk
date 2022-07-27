@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, resolve_url
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.contrib import messages
@@ -21,7 +21,12 @@ def comment_create_question(request, question_id):
             comment.author = request.user
             comment.question = question
             comment.save()
-            return redirect("board:detail", question_id=question_id)
+            # return redirect("board:detail", question_id=question_id)
+            return redirect(
+                "{}#question_comment_{}".format(
+                    resolve_url("board:detail", question_id=question_id), comment.id
+                )
+            )
     else:
         form = CommentForm()
     return render(request, "board/comment_form.html", {"form": form})
@@ -41,7 +46,13 @@ def comment_modify_question(request, comment_id):
             comment_form = form.save(commit=False)
             comment_form.modify_date = timezone.now()
             comment_form.save()
-            return redirect("board:detail", question_id=comment.question.id)
+            # return redirect("board:detail", question_id=comment.question.id)
+            return redirect(
+                "{}#question_comment_{}".format(
+                    resolve_url("board:detail", question_id=comment.question.id),
+                    comment.id,
+                )
+            )
     else:
         form = CommentForm(instance=comment)
     return render(request, "board/comment_form.html", {"form": form})
@@ -73,7 +84,13 @@ def comment_create_answer(request, answer_id):
             comment.author = request.user
             comment.answer = answer
             comment.save()
-            return redirect("board:detail", question_id=comment.answer.question.id)
+            # return redirect("board:detail", question_id=comment.answer.question.id)
+            return redirect(
+                "{}#answer_comment_{}".format(
+                    resolve_url("board:detail", question_id=comment.answer.question.id),
+                    comment.id,
+                )
+            )
     else:
         form = CommentForm()
     return render(request, "board/comment_form.html", {"form": form})
@@ -96,7 +113,13 @@ def comment_modify_answer(request, comment_id):
             comment_form = form.save(commit=False)
             comment_form.modify_date = timezone.now()
             comment_form.save()
-            return redirect("board:detail", question_id=comment.answer.question.id)
+            # return redirect("board:detail", question_id=comment.answer.question.id)
+            return redirect(
+                "{}#answer_comment_{}".format(
+                    resolve_url("board:detail", question_id=comment.answer.question.id),
+                    comment.id,
+                )
+            )
     else:
         form = CommentForm(instance=comment)
     return render(request, "board/comment_form.html", {"form": form})

@@ -3,12 +3,21 @@
 {% load board_filter %} {% block content %}
 <div class="container my-3">
   <h1>Question List</h1>
+  <div class="row justify-content-end my-3">
+    <div class="col-4 input-group">
+      <input type="text" class="form-control keyword" value="{{keyword|default_if_none:''}}" />
+      <div class="input-group-append">
+        <button type="button" class="btn btn-outline-secondary" id="btn_search">Search</button>
+      </div>
+    </div>
+  </div>
   {% if question_list %}
   <table class="table">
     <thead>
       <tr class="thead-dark text-center">
         <th class="col-1">번호</th>
-        <th class="col-6">제목</th>
+        <th class="col-1">추천수</th>
+        <th class="col-5">제목</th>
         <th class="col-2">작성자</th>
         <th class="col-3">작성일시</th>
       </tr>
@@ -27,6 +36,11 @@
           |add:1 : 정해진 필터 ( + n )
         -->
         <td>{{ question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1 }}</td>
+        <td>
+          {% if question.voter.count > 0 %}
+          <span class="badge badge-warning px-2 py-1">{{ question.voter.count }}</span>
+          {% endif %}
+        </td>
         <td class="text-left">
           <a href=" {% url 'board:detail' question.id %} ">
             {{ question.subject }}
@@ -49,7 +63,7 @@
       -->
       {% if question_list.has_previous %}
       <li class="page-item">
-        <a class="page-link" href="?page={{question_list.previous_page_number}}">이전</a>
+        <a class="page-link" href="#" data-page="{{question_list.previous_page_number}}">이전</a>
       </li>
       {% endif %}
       <!--
@@ -60,7 +74,7 @@
       -->
       {% for page in question_list.paginator.page_range %} {% if page >= question_list.number|add:-5 and page <= question_list.number|add:5 %}
       <li class="page-item {% if page == question_list.number %} active {% endif %}">
-        <a class="page-link" href="?page={{page}}" style="width: 41px">{{page}}</a>
+        <a class="page-link" href="#" data-page="{{page}}" style="width: 41px">{{page}}</a>
       </li>
       {% endif %} {% endfor %}
 
@@ -69,7 +83,7 @@
       -->
       {% if question_list.has_next %}
       <li class="page-item">
-        <a class="page-link" href="?page={{question_list.next_page_number}}">다음</a>
+        <a class="page-link" href="{{question_list.next_page_number}}" data-page="{{question_list.next_page_number}}">다음</a>
       </li>
       {% endif %}
     </ul>
@@ -77,4 +91,35 @@
   {% endif %}
   <a href="{% url 'board:question_create' %}" class="btn btn-primary">질문 등록</a>
 </div>
+<form action="" id="searchForm" method="get">
+  <input type="hidden" name="keyword" id="keyword" value="{{keyword|default_if_none:''}}" />
+  <input type="hidden" name="page" id="page" value="{{page}}" />
+</form>
+{% endblock %} {% block script %}
+<script>
+  $(function () {
+    searchForm = $("#searchForm");
+    // 하단의 페이지를 누르면 searchForm 전송
+    // page번호 담기
+    $(".page-link").click(function (e) {
+      e.preventDefault();
+
+      let keyword = $(".keyword").val();
+      $("#page").val($(this).data("page"));
+      $("#keyword").val(keyword);
+      searchForm.submit();
+    });
+    $("#btn_search").click(function () {
+      let keyword = $(".keyword").val();
+      if (keyword == "") {
+        alert("검색어를 입력해주세요");
+        return;
+      }
+      $("#keyword").val(keyword);
+      $("#page").val(1);
+      searchForm.attr("action", "{% url 'board:index' %}");
+      searchForm.submit();
+    });
+  });
+</script>
 {% endblock %}
