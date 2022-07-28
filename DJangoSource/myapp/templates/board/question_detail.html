@@ -44,9 +44,7 @@
               {{question.modify_date}}
             </div>
           </div>
-          {% endif %}
-          <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'board:index' %}">ToList</a>
-          {% if question.author == request.user %}
+          {% endif %} {% if question.author == request.user %}
           <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'board:question_modify' question_id=question.id %}">Modify</a>
           <a type="button" class="delete btn btn-sm btn-outline-secondary" href="#" data-uri="{% url 'board:question_delete' question_id=question.id %}">Delete</a>
           {% endif %}
@@ -73,6 +71,12 @@
           <!-- 질문 댓글 영역 END -->
         </div>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-11">
+      <a href="javascript:void(0);" class="back_to_list btn btn-primary btn-sm my-4"><i class="fas fa-list"> ToList</i></a>
     </div>
   </div>
   <h5 class="border-bottom my-3 py-2">
@@ -154,12 +158,12 @@
     </form>
   </div>
 </div>
-
-{% endblock %}
-<form action="" id="searchForm" method="get">
+<form action="{% url 'board:index' %}" id="searchForm" method="get">
   <input type="hidden" name="keyword" id="keyword" value="{{keyword|default_if_none:''}}" />
+  <input type="hidden" name="sort" id="sort" value="{{sort}}" />
   <input type="hidden" name="page" id="page" value="{{page}}" />
 </form>
+{% endblock %}
 <!-- Script 작성 블럭 -->
 {% block script %}
 <script>
@@ -185,6 +189,10 @@
       } else {
         return;
       }
+    });
+
+    $(".back_to_list").click(function (e) {
+      $("#searchForm").submit();
     });
   });
 </script>
