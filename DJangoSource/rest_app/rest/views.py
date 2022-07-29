@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import mixins, generics
+from rest_framework import viewsets
 
 from .serializers import BookSerializer
 from .models import Book
@@ -128,3 +129,12 @@ class BookAPIGenerics(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     lookup_field = "bid"
+
+
+#################### DRF Viewset & Router ####################
+# ViewSet : View 의 집합 ( 여러거지 뷰를 한 곳에 모아놓음 )
+
+
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
